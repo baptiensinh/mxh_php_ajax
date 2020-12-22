@@ -71,6 +71,9 @@ a {
 a:focus {
 	outline: none !important;
 }
+.limiter{
+  background-color: ;
+}
 
 a:hover {
 	text-decoration: none;
@@ -249,13 +252,24 @@ iframe {
   left: 0;
   background: rgba(0,0,0,0.1);
 }
+body{
+  background-image: url("../images/background.jpeg");
 
+  /* Full height */
+  height: 100%; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 
 /*==================================================================
 [ Form ]*/
 
 .login100-form {
+  margin:auto;
   width: 560px;
   min-height: 100vh;
   display: block;
