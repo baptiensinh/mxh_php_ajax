@@ -226,30 +226,36 @@ $link->close();
 
 <body>
 
-    <nav class="navbar navbar-expand-lg Linear-Gradient-nav fixed-top fix-z-1">
-        <div class="container">
-            <a class="navbar-brand ds-hover nav-link" href="../home">
-                <img src="images/7.png" width="20" height="auto" alt="logo">
-                3RAW
-            </a>
-            <!--TODO:SEARCH-->
-            <div class="search-navbar" id="search-navbar">
-                <input class="" type="search" name="Search" id="search" placeholder="Search anything you need: images, #tag, @user, etc...">
-            </div>
+<nav class="nava navbar navbar-expand-lg fixed-top fix-z-1">
 
-            <!--TODO:END SEARCH-->
-            <!--TODO: upload image-->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="nav navbar-nav ml-auto">
-                    <?php echo $log_reg; ?>
-                </ul>
-            </div>
-        </div>
+<a class="navbar-brand ds-hover nav-link" href="../home/">
+    <img src="images/7.png" width="120" height="auto" alt="logo">
+</a>
+<!--TODO:SEARCH-->
+<form action="search.php" class="searchcss" method="POST">
+    <div class="input-group mb-3 ">
+         <div class="input-group-prepend">
+             <button class="input-group-text" id="search">Search</button>
+         </div>
+         
+      <input class="form-control" type="search" name="search" id="search" placeholder="...">
+ </div>
 
-    </nav>
+    
+</div>
+</form>
+<!--TODO:END SEARCH-->
+<!--TODO: upload image-->
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarResponsive">
+    <ul class="nav navbar-nav ml-auto">
+        <!-- TODO: PHP USER -->
+        <?php echo $log_reg; ?>
+    </ul>
+</div>
+</nav>
     <div class="pt-5"></div>
     <!--TODO:This post-->
     <div class="container pt-3">

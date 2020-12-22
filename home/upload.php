@@ -79,7 +79,7 @@ require_once "../includes/session.php";
                     <input class="w-100" type="text" name="images_description" id="images_description" placeholder="Enter description..." required maxlength="99">
                 </div>
                 <div class="col-sm-12 col-lg-12">
-                    <img class="ds-img-upload" id="blah" src="images/bilibili.jpeg" alt="your image" />
+                    <img class="ds-img-upload" id="blah" src="images/upload.png" alt="your image" />
                 </div>
             </div>
 
