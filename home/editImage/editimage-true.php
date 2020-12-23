@@ -1,5 +1,5 @@
 <?php
-require_once "../../includes/config.php";
+require_once "../../includes/connectdb.php";
 session_start();
 $get_title=$_POST["message"];
 $get_description=$_POST["message1"];

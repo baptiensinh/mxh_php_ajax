@@ -199,13 +199,13 @@ if (mysqli_num_rows($result_recommend) > 0) {
                                         <li class="list-inline-item"><a class="" href="">Locations</a></li>
                                         <li class="list-inline-item"><a class="" href="">Top Accounts</a></li>
                                         <li class="list-inline-item"><a class="" href="">Hashtags</a></li>
-                                        <li class="list-inline-item"><span class="">Language<select aria-label="Switch Display Language" class="hztqj">
+                                        <li class="list-inline-item"><span class="">Language<select aria-label="Switch Display Language" class="">
                                             <option value="af">Afrikaans</option>
                                             <option value="cs">Čeština</option>
                                             <option value="da">Dansk</option>
                                             <option value="de">Deutsch</option>
                                             <option value="el">Ελληνικά</option>
-                                            <option value="en">English</option>
+                                            <option  selected="selected" value="en">English</option>
                                             <option value="en-gb">English (UK)</option>
                                             <option value="es">Español (España)</option>
                                             <option value="es-la">Español</option>

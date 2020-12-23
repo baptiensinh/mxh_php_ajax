@@ -362,26 +362,21 @@ $link->close();
     <!-- Modal -->
     <div class="modal fade" id="viewMore" tabindex="-1" role="dialog" aria-labelledby="viewMoreCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <ul class="list-group list-group-flush text-center">
-                        <li class="ds-hover-modal list-group-item">
-                            Report photo
-                        </li>
-                        <li class="ds-hover-modal list-group-item">
-                            Go to Post
-                        </li>
-                        <li class="ds-hover-modal list-group-item">Copy url</li>
-                        <li class="ds-hover-modal list-group-item">
-                            <a <?php
-                                echo 'href="' . $download_image . '"';
-                                ?>>
-                                Download
-                            </a>
-                        </li>
-                    </ul>
+        <div class="RnEpo Yx5HN     " role="presentation">
+            <div class="pbNvD  fPMEg    " role="dialog">
+                <div class="_1XyCr"><div class="piCib">
+                    <div class="mt3GC">
+                        <button class="" tabindex="0">Report</button>
+                        <button class="" tabindex="0">Unfollow</button>
+                        <button class="" tabindex="0">Share to...</button>
+                        <button class="" tabindex="0">Copy Link</button>
+                        <button class="" tabindex="0">Embed</button>
+                        <button class="" tabindex="0">Cancel</button>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
         </div>
     </div>
     <!--TODO: This share-->
@@ -480,6 +475,66 @@ $link->close();
     <script src="js/sidebar.js"></script>
     <script src="js/owl/owl.js"></script>
     <script id="dsq-count-scr" src="//127-0-0-1-5500.disqus.com/count.js" async></script>
+    <div  style="text-align:center " class="fixed-bottom">
+         <ul class=" list-inline">
+                    <li class="list-inline-item"><a class="" href="">Help</a></li>
+                    <li class="list-inline-item"><a class=" " href="" rel="nofollow noopener noreferrer" target="_blank">About</a></li>
+                    <li class="list-inline-item"><a class="" href="">Press</a></li>
+                    <li class="list-inline-item"><a class="" href="">API</a></li>
+                    <li class="list-inline-item"><a class="" href="">Jobs</a></li>
+                    <li class="list-inline-item"><a class="" href="">Privacy</a></li>
+                    <li class="list-inline-item"><a class="" href="">Terms</a></li>
+                    <li class="list-inline-item"><a class="" href="">Locations</a></li>
+                    <li class="list-inline-item"><a class="" href="">Top Accounts</a></li>
+                    <li class="list-inline-item"><a class="" href="">Hashtags</a></li>
+                    <li class="list-inline-item"><span class="">Language<select aria-label="Switch Display Language" class="hztqj">
+                        <option value="af">Afrikaans</option>
+                        <option value="cs">Čeština</option>
+                        <option value="da">Dansk</option>
+                        <option value="de">Deutsch</option>
+                        <option value="el">Ελληνικά</option>
+                        <option selected="selected" value="en">English</option>
+                        <option value="en-gb">English (UK)</option>
+                        <option value="es">Español (España)</option>
+                        <option value="es-la">Español</option>
+                        <option value="fi">Suomi</option>
+                        <option value="fr">Français</option>
+                        <option value="id">Bahasa Indonesia</option>
+                        <option value="it">Italiano</option>
+                        <option value="ja">日本語</option>
+                        <option value="ko">한국어</option>
+                        <option value="ms">Bahasa Melayu</option>
+                        <option value="nb">Norsk</option>
+                        <option value="nl">Nederlands</option>
+                        <option value="pl">Polski</option>
+                        <option value="pt-br">Português (Brasil)</option>
+                        <option value="pt">Português (Portugal)</option>
+                        <option value="ru">Русский</option>
+                        <option value="sv">Svenska</option>
+                        <option value="th">ภาษาไทย</option>
+                        <option value="tl">Filipino</option>
+                        <option value="tr">Türkçe</option>
+                        <option value="zh-cn">中文(简体)</option>
+                        <option value="zh-tw">中文(台灣)</option>
+                        <option value="bn">বাংলা</option>
+                        <option value="gu">ગુજરાતી</option>
+                        <option value="hi">हिन्दी</option>
+                        <option value="hr">Hrvatski</option>
+                        <option value="hu">Magyar</option>
+                        <option value="kn">ಕನ್ನಡ</option>
+                        <option value="ml">മലയാളം</option><option value="mr">मराठी</option><option value="ne">नेपाली</option>
+                        <option value="pa">ਪੰਜਾਬੀ</option><option value="si">සිංහල</option><option value="sk">Slovenčina</option>
+                        <option value="ta">தமிழ்</option><option value="te">తెలుగు</option><option value="vi">Tiếng Việt</option>
+                        <option value="zh-hk">中文(香港)</option><option value="bg">Български</option><option value="fr-ca">Français (Canada)</option>
+                        <option value="ro">Română</option><option value="sr">Српски</option><option value="uk">Українська</option>
+                    </select>
+                        </span>
+                    </li>
+                </ul>
+            <div >
+            © 2020 BULE SKY FROM EARTH :))
+            </div>
+        </div>
 </body>
 
 </html>

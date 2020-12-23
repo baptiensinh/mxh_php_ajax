@@ -1,5 +1,5 @@
 <?php
-require_once "../../includes/config.php";
+require_once "../../includes/connectdb.php";
 session_start();
 
 //TODO: get id image need delete

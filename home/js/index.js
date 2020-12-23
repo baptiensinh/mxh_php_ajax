@@ -6,6 +6,7 @@ canvas.height = 300;
 // canvas.width = 100%;
 // canvas.height = 50%;
 
+
 var stars = [], // Array that contains the stars
   FPS = 60, // Frames per second
   x = 100, // Number of stars

@@ -3,8 +3,8 @@ require_once "../includes/session.php";
 require_once "../includes/connectdb.php";
 
 $id = $_GET['id'];
-print_r( $_GET['id']);
-//TODO: show user name
+$countphoto=0;
+// : show user name
 $sql_showusername = 'SELECT * FROM users WHERE id="' . $id . '"';
 $result_showusername = $link->query($sql_showusername);
 $showusername = '';
@@ -17,7 +17,7 @@ if ($row_showusername['status_user'] == 1) {
     echo 'window.location.href = "../home"';
     echo '</script>';
 }
-//TODO: show image for user name
+// : show image for user name
 $showphotoid = '';
 $sql_showphotoid = 'SELECT * FROM photos
                         WHERE id_user = "' . $id . '" 
@@ -25,10 +25,10 @@ $sql_showphotoid = 'SELECT * FROM photos
 $result_showphotoid = $link->query($sql_showphotoid);
 if (mysqli_num_rows($result_showphotoid) > 0) {
     while ($row_showphotoid = mysqli_fetch_assoc($result_showphotoid)) {
+        // isset:exist
         if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
             if ($row_showphotoid["status_photo"] == 0 || $row_showphotoid["status_photo"] == 1) {
-
-
+                $countphoto=$countphoto+1;
                 $showphotoid = $showphotoid . '
             <div class="col-md-12 col-lg-4 col-md-3 pt-4 item">
                 <div class="card ds-card">
@@ -36,22 +36,14 @@ if (mysqli_num_rows($result_showphotoid) > 0) {
                         <img class="img-fluid image scale-on-hover box-profile" src="../images/' . $row_showphotoid["images_url"] . '">
                     </a>
                     <div class="card-body">
-                        <h5 class="card-title pt-3">Title: ' . $row_showphotoid["title"] . '</h5>
-                        <h5 class="card-title">Description: ' . $row_showphotoid["images_description"] . '</h5>
-                        <p class="card-text">ID#' . $row_showphotoid["id"] . '</p>';
-                if ($row_showphotoid["status_photo"] == 0) {
-                    $showphotoid = $showphotoid . '<p class="card-text">Waiting for verify. <img src="images/delete.png" alt="" srcset=""></p>';
-                } elseif ($row_showphotoid["status_photo"] == 1) {
-                    $showphotoid = $showphotoid . '<p class="card-text">Verify by Admin <img src="images/check-mark.png" alt="" srcset=""></p>';
-                }
-
+                        <h5 class="card-title"> ' . $row_showphotoid["images_description"] . '</h5>';
                 $showphotoid = $showphotoid . '            
                         <div class="text-center">
                             <a href="deletephoto.php?id=' . $row_showphotoid["id"] . '">
-                                <button type="button" class="btn btn-danger" onclick="clickDel();">Delete</button>
+                                <button type="button" class="btn " onclick="clickDel();">Delete</button>
                             </a>
                             <a href="editImage/editimage.php?id=' . $row_showphotoid["id"] . '">
-                                <button type="button" class="btn btn-info" onclick="clickEdit();">Edit</button>
+                                <button type="button" class="btn " onclick="clickEdit();">Edit</button>
                             </a>
                         </div>    
                     </div>
@@ -61,6 +53,7 @@ if (mysqli_num_rows($result_showphotoid) > 0) {
             }
         } else {
             if ($row_showphotoid["status_photo"] == 0 || $row_showphotoid["status_photo"] == 1) {
+                $countphoto=$countphoto+1;
                 $showphotoid = $showphotoid . '
             <div class="col-md-12 col-lg-4 col-md-3 pt-4 item">
                 <div class="card ds-card">
@@ -68,15 +61,7 @@ if (mysqli_num_rows($result_showphotoid) > 0) {
                         <img class="img-fluid image scale-on-hover box-profile" src="../images/' . $row_showphotoid["images_url"] . '">
                     </a>
                     <div class="card-body">
-                    <h5 class="card-title pt-3">Title: ' . $row_showphotoid["title"] . '</h5>
-                    <h5 class="card-title">Description: ' . $row_showphotoid["images_description"] . '</h5>
-                    <p class="card-text">ID#' . $row_showphotoid["id"] . '</p>';
-                if ($row_showphotoid["status_photo"] == 0) {
-                    $showphotoid = $showphotoid . '<p class="card-text">Waiting for verify. <img src="images/delete.png" alt="" srcset=""></p>';
-                } elseif ($row_showphotoid["status_photo"] == 1) {
-                    $showphotoid = $showphotoid . '<p class="card-text">Verify by Admin <img src="images/check-mark.png" alt="" srcset=""></p>';
-                }
-                $showphotoid = $showphotoid . '
+                    <h5 class="card-title">  ' . $row_showphotoid["images_description"] . '</h5>
                     </div>
                 </div>
             </div>
@@ -85,19 +70,11 @@ if (mysqli_num_rows($result_showphotoid) > 0) {
         }
     }
 }
-//TODO: show user name
-// $sql_showusername = 'SELECT * FROM users WHERE id="' . $id . '"';
-// $result_showusername = $link->query($sql_showusername);
-// $showusername = '';
-// $row_showusername = mysqli_fetch_assoc($result_showusername);
+// : show user name
+
 if (mysqli_num_rows($result_showusername) == 1) {
-    $showusername = '<a href="../home/profile.php?id=' . $row_showusername["id"] . '">
-                    <div class="row">
-                    <div class="col-md-12 ds-post1">
-                    <button>' . $row_showusername["username"] . '</button>
-                    </div>
-                    </div>
-                    </a>';
+    $username =  $row_showusername["username"];
+    $email= $row_showusername["email"];
 } else {
     $showusername = '
                     <div class="row">
@@ -106,23 +83,21 @@ if (mysqli_num_rows($result_showusername) == 1) {
                     </div>
                     </div>';
 }
-//TODO: chagne password
+// : chagne password
 $showpasschange = '';
 if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
     $showpasschange = '
                     <a href="../home/changepass.php?id=' . $_SESSION['id'] . '">
                     <div class="row">
-                    <div class="col-md-12 ds-post1">
-                    <button>Change password</button>
+                    <div class="col-md-12 ">
+                    <img class="imgfixpassword" src="images/changepw.png" alt="change password">
                     </div>
                     </div>
                     </a>';
-} else {
-    $showpasschange = '<div class="row"><div class="col-md-12 ds-post1"><button disabled="disabled">Change password - Not have permission</button></div></div>';
 }
 
 
-//TODO: show and change avatar
+// : show and change avatar
 if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
     // ! <img class="box-icon-profile float-left" src="images/user.jpg" alt="" sizes="" srcset="">
     $sql_ava = 'SELECT * FROM users WHERE id= ' . $_SESSION['id'] . '';
@@ -156,17 +131,6 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
     }
 }
 
-// <div class="col-md-12 col-lg-4 col-md-3 pt-4 item">
-// <div class="card ds-card">
-//     <a class="lightbox" href="../img/image1.jpg">
-//         <img class="img-fluid image scale-on-hover" src="../img/image1.jpg">
-//     </a>
-//     <div class="card-body">
-//         <h5 class="card-title">Title</h5>
-//         <p class="card-text">Content</p>
-//     </div>
-// </div>
-// </div>
 ?>
 
 
@@ -207,26 +171,31 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
             alert("You are going to edit photo.");
         }
     </script>
-    <!--TODO:Back to top-->
-    <a id="button"></a>
-
     <!-- /#sidebar-wrapper -->
-    <!--TODO: This navigation-->
+    <!-- : This navigation-->
     <nav class="nava navbar navbar-expand-lg fixed-top fix-z-1">
 
         <a class="navbar-brand ds-hover nav-link" href="../home/">
             <img src="images/7.png" width="120" height="auto" alt="logo">
         </a>
-        <!--TODO:SEARCH-->
-
-        <!--TODO:END SEARCH-->
-        <!--TODO: upload image-->
+        <!-- :SEARCH-->
+        <form action="search.php" class="searchcss" method="POST">
+    <div class="input-group mb-3 ">
+         <div class="input-group-prepend">
+             <button class="input-group-text" id="search">Search</button>
+         </div>
+         
+      <input class="form-control" type="search" name="search" id="search" placeholder="...">
+    </div>
+</form>
+        <!-- :END SEARCH-->
+        <!-- : upload image-->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="nav navbar-nav ml-auto">
-                <!-- TODO: PHP USER -->
+                <!--  PHP USER -->
                 <?php echo $log_reg; ?>
             </ul>
         </div>
@@ -241,44 +210,60 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
                 ?>
             </div>
             <div class="col-md-4">
+                <div class="row">
                     <?php
-                    //TODO: show usernames
-                    echo $showusername;
+                    // show usernames
+                    echo $email;
                     ?>
+                </div>
+                <div class="row">
+                    <?php
+                     echo $countphoto." Posts";
+                    ?>
+                </div>
+
+                <div class="row">
+                    <?php
+                    // show usernames
+                    echo $username;
+                    ?>
+                </div>
             </div>
+
             <div class="col-md-4">
             <h1 class="display-5 text-white">
-                    <?php
-                    //TODO:  show change pass
+                    <?php    
+                    
+                    //  show change pass
                     echo $showpasschange;
                     ?>
                 </h1>
              </div>
         </div>
-        <div class="row">
-        <h1 class="display-5 text-white">
-                    <div class="row">
-                        <div class="col-md-12 ds-post1">
-                        <div class="col-md-12 ds-post1">
-                            <form action="upload.php" method="POST">                    
-                            <button class=""  id="login" type=""> <img src="images/photo.png" alt="" srcset=""> Upload</button>
-                         </form>
-                        </div>
-                    </div>
-                </h1>
 
-        </div>
         <div class="row pt-3">
-
+        
         </div>
         <div class="row">
-            <section class="gallery-block grid-gallery">
+        <hr>
+            <section class="">
                 <div class="row">
                     <div class="col-12">
                         <div class="row">
                             <?php
                             echo $showphotoid;
                             ?>
+                            <div class="col-md-12 col-lg-4 col-md-3 pt-4 item">
+                                 <div class="card ds-card">
+                                     <form action="upload.php" method="POST">
+                                         
+                                        <button type="submit" >
+                                            <img src="images/add.png" alt="">
+                                        </button>
+
+                                     </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -305,14 +290,14 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
             <li class="list-inline-item"><a class="" href="">Locations</a></li>
             <li class="list-inline-item"><a class="" href="">Top Accounts</a></li>
             <li class="list-inline-item"><a class="" href="">Hashtags</a></li>
-            <li class="list-inline-item"><span class="">Language<select aria-label="Switch Display Language" class="hztqj">
+            <li class="list-inline-item"><span class="">Language<select aria-label="Switch Display Language" class="">
                 <option value="af">Afrikaans</option>
                 <option value="cs">Čeština</option>
                 <option value="da">Dansk</option>
                 <option value="de">Deutsch</option>
                 <option value="el">Ελληνικά</option>
                 <option value="en">English</option>
-                <option value="en-gb">English (UK)</option>
+                <option selected="selected" value="en-gb">English (UK)</option>
                 <option value="es">Español (España)</option>
                 <option value="es-la">Español</option>
                 <option value="fi">Suomi</option>
