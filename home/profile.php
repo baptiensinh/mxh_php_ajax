@@ -85,6 +85,7 @@ if (mysqli_num_rows($result_showusername) == 1) {
 }
 // : chagne password
 $showpasschange = '';
+$uploadbtt="";
 if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
     $showpasschange = '
                     <a href="../home/changepass.php?id=' . $_SESSION['id'] . '">
@@ -94,6 +95,16 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
                     </div>
                     </div>
                     </a>';
+    $uploadbtt='<div class="col-md-12 col-lg-4 col-md-3 pt-4 item">
+    <div class="card ds-card">
+        <form action="upload.php" method="POST">
+            
+           <button type="submit" >
+               <img src="images/add.png" alt="">
+           </button>
+            </form>
+        </div>
+    </div>';
 }
 
 
@@ -252,18 +263,9 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
                         <div class="row">
                             <?php
                             echo $showphotoid;
+                            echo $uploadbtt;
                             ?>
-                            <div class="col-md-12 col-lg-4 col-md-3 pt-4 item">
-                                 <div class="card ds-card">
-                                     <form action="upload.php" method="POST">
-                                         
-                                        <button type="submit" >
-                                            <img src="images/add.png" alt="">
-                                        </button>
-
-                                     </form>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>

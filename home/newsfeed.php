@@ -34,6 +34,7 @@ if (isset($_GET["id"])) {
     $result2 = $link->query($sql2);
     $row2 = mysqli_fetch_assoc($result2);
     //TODO: show avatar
+    $userpost=$row2["username"];
     if ($row2["avatar_url"] == null) {
         $show_avatar = '<a href="../home/profile.php?id=' . $row2["id"] . '">
                     <img class="box-icon float-left" src="images/user.jpg" alt="" sizes="" srcset="">
@@ -174,27 +175,6 @@ $sql_recommend = 'SELECT *
                     FROM photos
                 ';
 
-
-
-
-
-// <img class="box-icon float-left" src="images/user.jpg" alt="" sizes="" srcset="">
-// <div class="row ds-box">
-// <div class="col-md-5 col-sm-12 dropdown">
-//     <img class="ds-thum" src="images/Images/36869222_804435913084696_1261595859506692096_n.jpg" alt="" srcset="">
-//     <div class="dropdown-content">
-//         <img class="ds-thum-ho" src="images/Images/36869222_804435913084696_1261595859506692096_n.jpg" alt="Cinque Terre">
-//         <div class="desc">Beautiful Cinque Terre</div>
-//     </div>
-// </div>
-// <div class="col-md-7 col-sm-12">
-//     <div class="d-flex text-right">title name fileaaa</div>
-//     <div class="d-flex text-right">Username</div>
-//     <div class="d-flex text-right">views</div>
-// </div>
-// </div>
-// <div class="d-flex p-2"></div>
-
 $link->close();
 ?>
 
@@ -208,11 +188,11 @@ $link->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Image - <?php
+    <title>BLUESKY - <?php
                         //TODO: caption here
-                        echo $row["title"];
+                        echo $userpost;
                         ?></title>
-<link rel="stylesheet" href="css/owl/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/owl/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link href="css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" href="css/hover.css">
@@ -258,104 +238,92 @@ $link->close();
 </nav>
     <div class="pt-5"></div>
     <!--TODO:This post-->
-    <div class="container pt-3">
-        <div class="row">
-            <div class="col-md-8 col-sm-12 mx-auto">
-                <div class="card transform-on-hover w-100">
-                    <div class="card-header bg-transparent">
-                        <?php
-                        echo $show_avatar;
-                        ?>
-                        <a class="d-inline-flex p-2 ds-username-title" href="#">
-                            <!-- //TODO: user here -->
+        <div class="container ">
+            <div class="row">
+                <div class="col-md-8 col-sm-12 mx-auto">
+                    <div class="card transform-on-hover w-100">
+                        <div class="card-header bg-transparent">
                             <?php
-                            if (isset($row2["username"])) {
-                                $showuser = '<a style="font-size: 25px" href="../home/profile.php?id=' . $row2["id"] . '">' . $row2["username"] . '</a>';
-                                echo $showuser;
-                            } else {
-                                echo "Anonymous";
-                            }
+                            echo $show_avatar;
                             ?>
-                        </a>
-                        <img class="d-inline-flex float-right p-2" src="images/more.png" alt="" srcset="" data-toggle="modal" data-target="#viewMore">
-                    </div>
-                    <div class="card-body bg-transparent">
-                        <img class="card-img-top img-fluid" <?php
-                                                            // TODO: IMAGE CENTER HERE
-                                                            echo $url;
-                                                            ?> alt="Card image cap">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <img id="love" src="images/hearts.png">
-                                    </div>
-                                    <!-- <div class="col-2">
-                                        <img id="love" src="images/chat.png" data-toggle="modal"
-                                            data-target="#viewComment">
-                                    </div> -->
-                                    <div class="col-9"></div>
-                                    <div class="col-1">
-                                        <img id="love" src="images/paper-plane.png" data-toggle="modal" data-target="#viewShare">
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                Title:
+                            <a class="d-inline-flex p-2 ds-username-title" href="#">
+                                <!-- //TODO: user here -->
                                 <?php
-                                //TODO: caption here
-                                echo $row["title"];
+                                if (isset($row2["username"])) {
+                                    $showuser = '<a style="font-size: 25px" href="../home/profile.php?id=' . $row2["id"] . '">' . $row2["username"] . '</a>';
+                                    echo $showuser;
+                                } else {
+                                    echo "Anonymous";
+                                }
                                 ?>
-                            </li>
-                            <li class="list-group-item">
-                                Description:
-                                <?php
-                                //TODO: caption here
-                                echo $row["images_description"];
-                                ?>
-                            </li>
-                            <?php
-                            if ($row["status_photo"] == 0) {
-                                echo '<p class="list-group-item">Waiting for verify. <img src="images/delete.png" alt="" srcset=""></p>';
-                            } elseif ($row["status_photo"] == 1) {
-                                echo '<p class="list-group-item">Verify by Admin <img src="images/check-mark.png" alt="" srcset=""></p>';
-                            }
-                            ?>
+                            </a>
+                            <img class="d-inline-flex float-right p-2" src="images/more.png" alt="" srcset="" data-toggle="modal" data-target="#viewMore">
+                        </div>
+                        <div class="card-body bg-transparent">
+                            <img class="card-img-top img-fluid" <?php
+                                                                // TODO: IMAGE CENTER HERE
+                                                                echo $url;
+                                                                ?> alt="Card image cap">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-2">
+                                        <button class="btn btn-outline-secondary love">Like</button>
+                                        </div>
+                                        <!-- <div class="col-2">
+                                            <img id="love" src="images/chat.png" data-toggle="modal"
+                                                data-target="#viewComment">
+                                        </div> -->
+                                        <div class="col-9"></div>
+                                        <div class="col-1">
+                                            <img id="love" src="images/paper-plane.png" data-toggle="modal" data-target="#viewShare">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                
+                                    <?php
+                                    //TODO: caption here
+                                    echo $row["images_description"];
+                                    ?>
+                                </li>
+
+                                <!-- // if ($row["status_photo"] == 0) {
+                                //     echo '<p class="list-group-item">Waiting for verify. <img src="images/delete.png" alt="" srcset=""></p>';
+                                // } elseif ($row["status_photo"] == 1) {
+                                //     echo '<p class="list-group-item">Verify by Admin <img src="images/check-mark.png" alt="" srcset=""></p>';
+                                // } -->
                         </ul>
+                        </div>
+                    </div>             
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <!--TODO: reconned-->
+                    <h4 class="text-white text-center">Recommend for you</h4>
+                    <div class="d-flex p-2"></div>
+                    <div class="col=md-4">
+                            <div class="position-fixed">
+                                <div class="row">
+                                <!-- <img class="box-icon-profile float-left img-re" src="images/user.jpg" alt="" sizes="" srcset=""> -->
+                                <?php
+                                    echo $show_avatar;
+                                ?>
+                                    <div class="name-re"><?php echo $userpost;?></div>
+                                        
+                                    </div>
+                            </div>
+                                </div>
+                            </div>
+                    
+                            
+                        </div>
                     </div>
                 </div>
-                <!--TODO:THIS COMMENT DISQUE-->
-                <div id="disqus_thread"></div>
-                <script>
-                    /**
-                     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-                     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-                    /*
-                    var disqus_config = function () {
-                    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-                    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                    };
-                    */
-                    (function() { // DON'T EDIT BELOW THIS LINE
-                        var d = document,
-                            s = d.createElement('script');
-                        s.src = 'https://127-0-0-1-5500.disqus.com/embed.js';
-                        s.setAttribute('data-timestamp', +new Date());
-                        (d.head || d.body).appendChild(s);
-                    })();
-                </script>
-                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments
-                        powered by
-                        Disqus.</a></noscript>
             </div>
-            <div class="col-md-4 col-sm-12">
-                <!--TODO: reconned-->
-                <h4 class="text-white text-center">Recommend for you</h4>
-                <div class="d-flex p-2"></div>
-                <?php
-                echo $show_recommend;
-                ?>
-            </div>
+            <div class="row">
+            <?php
+                    echo $show_recommend;
+                    ?>
         </div>
     </div>
     <!--TODO: This view more-->
@@ -409,63 +377,10 @@ $link->close();
     <!--TODO: That's button upload-->
     <a href="upload.php">
         <div class="ds-upload position-fixed">
-            <button class="" id="login" type=""> <img src="images/photo.png" alt="" srcset=""> Upload</button>
+            <button class="" id="login" type=""> Upload</button>
         </div>
     </a>
-    <!--TODO: This comment-->
-    <!-- Modal -->
-    <!-- <div class="modal fade" id="viewComment" tabindex="-1" role="dialog" aria-labelledby="viewCommentCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6 d-inline-flex">
-                                <!--TODO: this card imageS--
-                                <div class="card transform-on-hover w-100">
-                                    <div class="card-header Linear-Gradient-nav">
-                                        <img class="box-icon float-left" src="images/user.jpg" alt="" sizes=""
-                                            srcset="">
-                                        <a class="d-inline-flex p-2 ds-username-title" href="#">Username</a>
-                                    </div>
-                                    <div class="card-body bg-transparent">
-                                        <img class="card-img-top img-fluid" src="images/Images/014.jpg"
-                                            alt="Card image cap">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <!--TODO:THIS COMMENT DISQUE--
-                                <div id="disqus_thread"></div>
-                                <script>
 
-                                    /**
-                                    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-                                    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-                                    /*
-                                    var disqus_config = function () {
-                                    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-                                    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                                    };
-                                    */
-                                    (function () { // DON'T EDIT BELOW THIS LINE
-                                        var d = document, s = d.createElement('script');
-                                        s.src = 'https://127-0-0-1-5500.disqus.com/embed.js';
-                                        s.setAttribute('data-timestamp', +new Date());
-                                        (d.head || d.body).appendChild(s);
-                                    })();
-                                </script>
-                                <noscript>Please enable JavaScript to view the <a
-                                        href="https://disqus.com/?ref_noscript">comments powered by
-                                        Disqus.</a></noscript>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
     </div>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/popper.min.js"></script>
@@ -538,3 +453,4 @@ $link->close();
 </body>
 
 </html>
+
