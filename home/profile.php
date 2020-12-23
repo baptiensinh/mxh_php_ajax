@@ -2,7 +2,8 @@
 require_once "../includes/session.php";
 require_once "../includes/connectdb.php";
 
-
+$id = $_GET['id'];
+print_r( $_GET['id']);
 //TODO: show user name
 $sql_showusername = 'SELECT * FROM users WHERE id="' . $id . '"';
 $result_showusername = $link->query($sql_showusername);
@@ -259,9 +260,9 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
                     <div class="row">
                         <div class="col-md-12 ds-post1">
                         <div class="col-md-12 ds-post1">
-                        <a href="upload.php">
+                            <form action="upload.php" method="POST">                    
                             <button class=""  id="login" type=""> <img src="images/photo.png" alt="" srcset=""> Upload</button>
-                         </a>
+                         </form>
                         </div>
                     </div>
                 </h1>

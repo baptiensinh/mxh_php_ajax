@@ -492,11 +492,12 @@ input.input100 {
   width: 100%;
   height: 50px;
   border-radius: 10px;
-  background: #3abcf8;
-
+  background: white;
+  border-style: solid;
+  border-color: cadetblue;
   font-family: Montserrat-Bold;
   font-size: 12px;
-  color: #fff;
+  color: black;
   line-height: 1.2;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -524,11 +525,13 @@ input.input100 {
   width: 49%;
   height: 50px;
   border-radius: 10px;
-  background: #00c3ff;
+  background: white;
+  color: black;
+  border-style: solid;
+  border-color: cadetblue;
 
   font-family: Montserrat-Bold;
   font-size: 12px;
-  color: #fff;
   line-height: 1.2;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -663,9 +666,4 @@ input.input100 {
 .login100-form-social-item:hover {
   background: #333333;
   color: #fff;
-}
-
-
-#continue{
-  cursor: not-allowed;
 }
