@@ -4,7 +4,6 @@ require_once "../includes/connectdb.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_SESSION["username"])) {
         $id_username = $_SESSION["id"];
-        $title_image = $_POST['title_image'];
         $images_description = $_POST['images_description'];
         // TODO: for image upload
         $file = $_FILES['image']['name'];
