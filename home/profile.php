@@ -35,9 +35,7 @@ if (mysqli_num_rows($result_showphotoid) > 0) {
                     <a class="lightbox" href="../home/newsfeed.php?id=' . $row_showphotoid["id"] . '">
                         <img class="img-fluid image scale-on-hover box-profile" src="../images/' . $row_showphotoid["images_url"] . '">
                     </a>
-                    <div class="card-body">
-                        <h5 class="card-title"> ' . $row_showphotoid["images_description"] . '</h5>';
-                $showphotoid = $showphotoid . '            
+                    <div class="card-body">           
                         <div class="text-center">
                             <a href="deletephoto.php?id=' . $row_showphotoid["id"] . '">
                                 <button type="button" class="btn " onclick="clickDel();">Delete</button>
@@ -61,7 +59,6 @@ if (mysqli_num_rows($result_showphotoid) > 0) {
                         <img class="img-fluid image scale-on-hover box-profile" src="../images/' . $row_showphotoid["images_url"] . '">
                     </a>
                     <div class="card-body">
-                    <h5 class="card-title">  ' . $row_showphotoid["images_description"] . '</h5>
                     </div>
                 </div>
             </div>
@@ -153,7 +150,10 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Profile</title>
+    <title><?php
+                        //TODO: caption here
+                        echo $username;
+                        ?> ♣ BlueSky</title>
     <link rel="stylesheet" href="css/owl/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link href="css/simple-sidebar.css" rel="stylesheet">

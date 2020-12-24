@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // ! just for debug
         // echo $title_image;
         // echo $image;
-        $sql = "INSERT INTO photos (title, id_user, status_photo , images_description, images_url) VALUES ('" . $title_image . "','" . $id_username . "','0','" . $images_description . "','" . $image . "')";
+        $sql = "INSERT INTO photos (id_user, status_photo , images_description, images_url) VALUES ('" . $id_username . "','0','" . $images_description . "','" . $image . "')";
         //$sql2 = "INSERT INTO users (username,email, pass) VALUES ('" . $username . "','" . $email . "','" . $password . "');";
         // ! just for debug
         // echo $sql;

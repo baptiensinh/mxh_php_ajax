@@ -5,10 +5,21 @@
     z-index: 1;
 }
 
+.card-title{
+    padding-left: 10px;
+}
+.card-text{
+    padding-left: 10px;
+}
 .ds-hover-icon:hover {
     background-color: rgba(177, 177, 177, 0.329);
     box-shadow: 0px 2px 2px 0px rgb(255, 255, 255);
     z-index: 1;
+}
+
+.cmt{
+    border: none;
+    border-color: transparent;
 }
 
 .Linear-Gradient {
@@ -103,7 +114,7 @@ input:hover {
 .box-profile {
     /* border-radius: 50%; */
     width: 100%;
-    max-height: 400px;
+    max-height: 350px;
     object-fit: cover;
 }
 
@@ -220,7 +231,6 @@ input:hover {
 .ds-card {
     background-color: #474A51;
     color: black;
-    padding: 15px;
 }
 
 .ds-card:hover {

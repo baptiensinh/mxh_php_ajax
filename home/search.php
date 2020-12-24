@@ -18,15 +18,8 @@ if (mysqli_num_rows($result_recommend) > 0) {
                         <img class="img-fluid image scale-on-hover box-profile" src="../images/' . $row_r["images_url"] . '">
                     </a>
                     <div class="card-body">
-                        <h5 class="card-title pt-3">Title: ' . $row_r["title"] . '</h5>
-                        <h5 class="card-title">Description: ' . $row_r["images_description"] . '</h5>';
-            if ($row_r["status_photo"] == 0) {
-                $show_content = $show_content . '<p class="card-text">Waiting for verify. <img src="images/delete.png" alt="" srcset=""></p>';
-            } elseif ($row_r["status_photo"] == 1) {
-                $show_content = $show_content . '<p class="card-text">Verify by Admin <img src="images/check-mark.png" alt="" srcset=""></p>';
-            }
-            $show_content = $show_content . '
-                        <p class="card-text">ID#' . $row_r["id"] . ' Upload by 
+                        <p class="card-text"> ' . $row_r["images_description"] . '</p>
+                        <p class="card-text"> Upload by 
                         <a href="../home/profile.php?id=' . $row_getid["id"] . '">
                         ' . $row_getid["username"] . '</a></p>
                     </div>
@@ -47,7 +40,7 @@ if (mysqli_num_rows($result_recommend) > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>3RAW - Images search</title>
+    <title>BlueSky - <?php echo $search;?></title>
     <link rel="stylesheet" href="css/owl/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link href="css/simple-sidebar.css" rel="stylesheet">
@@ -101,8 +94,6 @@ if (mysqli_num_rows($result_recommend) > 0) {
     </header>
 
     <!--TODO:Content-->
-    <div class="pt-5"></div>
-    <div class="pt-5"></div>
     <section class="gallery-block grid-gallery">
         <div class="container">
             <h3 class="text-white pt-5">Search Result for:

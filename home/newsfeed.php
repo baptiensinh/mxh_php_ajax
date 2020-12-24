@@ -2,6 +2,8 @@
 require_once "../includes/session.php";
 require_once "../includes/connectdb.php";
 
+
+$userpost="";
 if (isset($_GET["id"])) {
     $id_get = $_GET["id"];
     //src="images/Images/014.jpg"
@@ -25,7 +27,7 @@ if (isset($_GET["id"])) {
             src="../images/' . $row["images_url"] . '"
                 ';
     $download_image = '../images/' . $row["images_url"] . '';
-
+    $description=$row["images_description"];
     //TODO:get username
     $sql2 = 'SELECT *
                 FROM users
@@ -68,7 +70,7 @@ if (isset($_GET["id"])) {
             ';
     $download_image = '../images/' . $row["images_url"] . '';
     $show_avatar = '
-                    <img class="box-icon float-left" src="images/user.jpg" alt="" sizes="" srcset="">
+                    <img class="box-icon float-left" src="images/user.png" alt="" sizes="" srcset="">
                     
                     ';
 }
@@ -264,36 +266,6 @@ $link->close();
                                                                 // TODO: IMAGE CENTER HERE
                                                                 echo $url;
                                                                 ?> alt="Card image cap">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <div class="row">
-                                        <div class="col-2">
-                                        <button class="btn btn-outline-secondary love">Like</button>
-                                        </div>
-                                        <!-- <div class="col-2">
-                                            <img id="love" src="images/chat.png" data-toggle="modal"
-                                                data-target="#viewComment">
-                                        </div> -->
-                                        <div class="col-9"></div>
-                                        <div class="col-1">
-                                            <img id="love" src="images/paper-plane.png" data-toggle="modal" data-target="#viewShare">
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                
-                                    <?php
-                                    //TODO: caption here
-                                    echo $row["images_description"];
-                                    ?>
-                                </li>
-
-                                <!-- // if ($row["status_photo"] == 0) {
-                                //     echo '<p class="list-group-item">Waiting for verify. <img src="images/delete.png" alt="" srcset=""></p>';
-                                // } elseif ($row["status_photo"] == 1) {
-                                //     echo '<p class="list-group-item">Verify by Admin <img src="images/check-mark.png" alt="" srcset=""></p>';
-                                // } -->
-                        </ul>
                         </div>
                     </div>             
                 </div>
@@ -301,21 +273,28 @@ $link->close();
                     <!--TODO: reconned-->
                     <h4 class="text-white text-center">Recommend for you</h4>
                     <div class="d-flex p-2"></div>
-                    <div class="col=md-4">
-                            <div class="position-fixed">
+                            <div class="col=md-4">
                                 <div class="row">
-                                <!-- <img class="box-icon-profile float-left img-re" src="images/user.jpg" alt="" sizes="" srcset=""> -->
-                                <?php
-                                    echo $show_avatar;
-                                ?>
-                                    <div class="name-re"><?php echo $userpost;?></div>
-                                        
-                                    </div>
-                            </div>
+                                            <!-- <img class="box-icon-profile float-left img-re" src="images/user.jpg" alt="" sizes="" srcset=""> -->
+                                            <?php
+                                                echo $show_avatar;
+                                            ?>
+                                        <div class="name-re-nf"><?php echo $userpost;?></div>
+                                </div>
+                                <hr>
+                                <div class="row pt-70">
+                                            <!-- <img class="box-icon-profile float-left img-re" src="images/user.jpg" alt="" sizes="" srcset=""> -->
+                                           
+                                </div>
+                                <hr>
+                                <div class="row">
+                                            <!-- <img class="box-icon-profile float-left img-re" src="images/user.jpg" alt="" sizes="" srcset=""> -->
+                                            <?php
+                                                echo $show_avatar;
+                                            ?>
                                 </div>
                             </div>
-                    
-                            
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -348,33 +327,7 @@ $link->close();
         </div>
     </div>
     <!--TODO: This share-->
-    <!-- Modal -->
-    <div class="modal fade" id="viewShare" tabindex="-1" role="dialog" aria-labelledby="viewShareCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <ul class="list-group list-group-flush text-left">
-                        <li class="ds-hover-modal list-group-item">
-                            <img src="images/facebook.png" alt="" srcset="">
-                            Share in Facebook
-                        </li>
-                        <li class="ds-hover-modal list-group-item">
-                            <img src="images/twitter.png" alt="" srcset="">
-                            Share in Twitter
-                        </li>
-                        <li class="ds-hover-modal list-group-item">
-                            <img src="images/link-symbol.png" alt="" srcset="">
-                            Copy link address</li>
-                        <li class="ds-hover-modal list-group-item">
-                            <img src="images/verified.png" alt="" srcset="">
-                            Save
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--TODO: That's button upload-->
+
     <a href="upload.php">
         <div class="ds-upload position-fixed">
             <button class="" id="login" type=""> Upload</button>

@@ -72,10 +72,8 @@ require_once "../includes/session.php";
                 <div class="col-sm-12 col-lg-6">
                     <button class="btn ds-modal-button float-right" id="upload" type="submit">Upload</button>
                 </div>
-                <div class="col-sm-12 col-lg-6">
-                    <input class="w-100" type="text" name="title_image" id="title_image" placeholder="Enter title image..." required maxlength="99">
-                </div>
-                <div class="col-sm-12 col-lg-6">
+
+                <div class="col-sm-12 col-lg-12">
                     <input class="w-100" type="text" name="images_description" id="images_description" placeholder="Enter description..." required maxlength="99">
                 </div>
                 <div class="col-sm-12 col-lg-12">
