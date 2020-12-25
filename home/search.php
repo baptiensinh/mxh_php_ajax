@@ -132,7 +132,6 @@ if (mysqli_num_rows($result_recommend) > 0) {
     <script src="js/sidebar.js"></script>
     <script src="js/owl/owl.js"></script>
     <!--TODO: load <script src="js/loadHTML.js"></script> -->
-    <script id="dsq-count-scr" src="//127-0-0-1-5500.disqus.com/count.js" async></script>
     <script src="js/totop.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
     <script>

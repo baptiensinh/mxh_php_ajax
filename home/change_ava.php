@@ -19,18 +19,15 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $id) { } else {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>3RAW - Change avatar</title>
+    <script src="js/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="css/owl/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link href="css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" href="css/hover.css">
     <script src="js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css" />
     <link rel="stylesheet" href="grid-gallery.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,900,900i" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="css/footer.css"> -->
-    <script src="js/jquery-3.3.1.min.js"></script>
+
 </head>
 
 <body>

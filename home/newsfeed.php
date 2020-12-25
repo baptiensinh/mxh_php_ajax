@@ -194,16 +194,13 @@ $link->close();
                         //TODO: caption here
                         echo $userpost;
                         ?></title>
+    <script src="js/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="css/owl/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link href="css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" href="css/hover.css">
-    <script src="../js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css" />
+    <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="grid-gallery.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,900,900i" rel="stylesheet">
-
 </head>
 
 <body>
@@ -335,14 +332,12 @@ $link->close();
     </a>
 
     </div>
-    <script src="js/jquery-3.3.1.min.js"></script>
+
     <script src="js/popper.min.js"></script>
     <script src="js/owl/owl.carousel.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/index.js"></script>
     <script src="js/sidebar.js"></script>
     <script src="js/owl/owl.js"></script>
-    <script id="dsq-count-scr" src="//127-0-0-1-5500.disqus.com/count.js" async></script>
     <div  style="text-align:center " class="fixed-bottom">
          <ul class=" list-inline">
                     <li class="list-inline-item"><a class="" href="">Help</a></li>

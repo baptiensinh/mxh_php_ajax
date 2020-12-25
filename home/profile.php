@@ -4,6 +4,8 @@ require_once "../includes/connectdb.php";
 
 $id = $_GET['id'];
 $countphoto=0;
+$countpost=0;
+
 // : show user name
 $sql_showusername = 'SELECT * FROM users WHERE id="' . $id . '"';
 $result_showusername = $link->query($sql_showusername);
@@ -19,50 +21,54 @@ if ($row_showusername['status_user'] == 1) {
 }
 // : show image for user name
 $showphotoid = '';
-$sql_showphotoid = 'SELECT * FROM photos
-                        WHERE id_user = "' . $id . '" 
+$sql_showphotoid = 'SELECT * FROM posts
+                        WHERE user_id = "' . $id . '" 
                     ORDER BY id DESC';
 $result_showphotoid = $link->query($sql_showphotoid);
-if (mysqli_num_rows($result_showphotoid) > 0) {
-    while ($row_showphotoid = mysqli_fetch_assoc($result_showphotoid)) {
-        // isset:exist
-        if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
-            if ($row_showphotoid["status_photo"] == 0 || $row_showphotoid["status_photo"] == 1) {
-                $countphoto=$countphoto+1;
-                $showphotoid = $showphotoid . '
-            <div class="col-md-12 col-lg-4 col-md-3 pt-4 item">
-                <div class="card ds-card">
-                    <a class="lightbox" href="../home/newsfeed.php?id=' . $row_showphotoid["id"] . '">
-                        <img class="img-fluid image scale-on-hover box-profile" src="../images/' . $row_showphotoid["images_url"] . '">
-                    </a>
-                    <div class="card-body">           
-                        <div class="text-center">
-                            <a href="deletephoto.php?id=' . $row_showphotoid["id"] . '">
-                                <button type="button" class="btn " onclick="clickDel();">Delete</button>
-                            </a>
-                            <a href="editImage/editimage.php?id=' . $row_showphotoid["id"] . '">
-                                <button type="button" class="btn " onclick="clickEdit();">Edit</button>
-                            </a>
-                        </div>    
+
+if(!empty($result_showphotoid)){
+    if (mysqli_num_rows($result_showphotoid) > 0) {
+        while ($row_showphotoid = mysqli_fetch_assoc($result_showphotoid)) {
+            // isset:exist
+            if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
+                if ($row_showphotoid["status_post"] == 1) {$countpost++;};
+                if ($row_showphotoid["status_post"] == 0 || $row_showphotoid["status_post"] == 1) {
+                    $countphoto=$countphoto+1;
+                    $showphotoid = $showphotoid . '
+                <div class="col-md-12 col-lg-4 col-md-3 pt-4 item">
+                    <div class="card ds-card">
+                        <a class="lightbox" href="../home/newsfeed.php?id=' . $row_showphotoid["id"] . '">
+                            <img class="img-fluid image scale-on-hover box-profile" src="../images/' . $row_showphotoid["images_url"] . '">
+                        </a>
+                        <div class="card-body">           
+                            <div class="text-center">
+                                <a href="deletephoto.php?id=' . $row_showphotoid["id"] . '">
+                                    <button type="button" class="btn " onclick="clickDel();">Delete</button>
+                                </a>
+                                <a href="editImage/editimage.php?id=' . $row_showphotoid["id"] . '">
+                                    <button type="button" class="btn " onclick="clickEdit();">Edit</button>
+                                </a>
+                            </div>    
+                        </div>
                     </div>
                 </div>
-            </div>
-        ';
-            }
-        } else {
-            if ($row_showphotoid["status_photo"] == 0 || $row_showphotoid["status_photo"] == 1) {
-                $countphoto=$countphoto+1;
-                $showphotoid = $showphotoid . '
-            <div class="col-md-12 col-lg-4 col-md-3 pt-4 item">
-                <div class="card ds-card">
-                    <a class="lightbox" href="../home/newsfeed.php?id=' . $row_showphotoid["id"] . '">
-                        <img class="img-fluid image scale-on-hover box-profile" src="../images/' . $row_showphotoid["images_url"] . '">
-                    </a>
-                    <div class="card-body">
+            ';
+                }
+            } else {
+                if ($row_showphotoid["status_post"] == 1) {
+                    $countpost++;
+                    $showphotoid = $showphotoid . '
+                <div class="col-md-12 col-lg-4 col-md-3 pt-4 item">
+                    <div class="card ds-card">
+                        <a class="lightbox" href="../home/newsfeed.php?id=' . $row_showphotoid["id"] . '">
+                            <img class="img-fluid image scale-on-hover box-profile" src="../images/' . $row_showphotoid["images_url"] . '">
+                        </a>
+                        <div class="card-body">
+                        </div>
                     </div>
                 </div>
-            </div>
-        ';
+            ';
+                }
             }
         }
     }
@@ -102,6 +108,17 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
             </form>
         </div>
     </div>';
+}
+else{
+    $showpasschange = '
+                    <a href="../home/changepass.php?id=' . $_SESSION['id'] . '">
+                    <div class="row">
+                    <div class="col-md-12 ">
+                    <img class="imgfixpassword" src="images/changepw.png" alt="change password">
+                    </div>
+                    </div>
+                    </a>';
+
 }
 
 
@@ -154,15 +171,13 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
                         //TODO: caption here
                         echo $username;
                         ?> ♣ BlueSky</title>
+     <script src="js/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="css/owl/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link href="css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" href="css/hover.css">
-    <script src="../js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css" />
+    <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="grid-gallery.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,900,900i" rel="stylesheet">
 
 </head>
 
@@ -227,18 +242,24 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
                     echo $email;
                     ?>
                 </div>
-                <div class="row">
-                    <?php
-                     echo $countphoto." Posts";
-                    ?>
-                </div>
-
+                
                 <div class="row">
                     <?php
                     // show usernames
                     echo $username;
                     ?>
                 </div>
+                <div class="row">
+                    <?php
+                     echo $countpost." Posts";
+                    ?>
+                </div>
+                <div class="row">
+                    <?php
+                     echo $countphoto." Photos";
+                    ?>
+                </div>
+
             </div>
 
             <div class="col-md-4">
@@ -260,6 +281,11 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
             <section class="">
                 <div class="row">
                     <div class="col-12">
+                    <div class="row d-flex justify-content-center ">
+                        <button id="btt_photos" class="btn btn-primary btn-lg mx-2">Photos</button>
+                        <button id="btt_posts" class='btn btn-primary btn-lg mx-2'>Posts</button>
+                        <button id="btt_friend" class='btn btn-primary btn-lg mx-2'>Friends</button>
+                    </div>
                         <div class="row">
                             <?php
                             echo $showphotoid;
@@ -274,7 +300,6 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
     </div>
     <div class="pt-5"></div>
 
-    <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/owl/owl.carousel.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>

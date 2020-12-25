@@ -61,12 +61,12 @@ require_once "../includes/session.php";
    
     <!--TODO: That's button upload-->
     <div class="container pt-5 pb-5">
-        <form action="upload_image.php" id='post-form' class='post-form' method='post' enctype="multipart/form-data">
+        <form action="uploadbe_video.php" id='post-form' class='post-form' method='post' enctype="multipart/form-data">
             <div class="row">   
                 <div class="col-sm-12 col-lg-6">
                     <label for='files'>Select images </label>
 
-                    <input id='files' type='file' name="images[]" multiple/>
+                    <input id='files' type='file' name="images[]"/>
                 </div>
                 <div class="col-sm-12 col-lg-6">
                     <button class="btn btn-outline-success" type="submit">Upload</button>

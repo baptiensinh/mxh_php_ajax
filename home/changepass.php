@@ -24,11 +24,9 @@ if (isset($_SESSION['id'])) { } else {
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link href="css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" href="css/hover.css">
-    <script src="../js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css" />
+    <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="grid-gallery.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,900,900i" rel="stylesheet">
+
 
 </head>
 

@@ -453,3 +453,16 @@ input:hover {
     width: 30px;
     height: 20px;
 }
+output{
+    display: flex;
+}
+.thumbnail{
+    
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+}
+.img_upload{
+    width: 280px;
+    height: 290px;
+}

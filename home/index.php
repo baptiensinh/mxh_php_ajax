@@ -5,16 +5,17 @@
 
 
     $show_content = '';
-    $sql_lastid = 'SELECT id FROM photos ORDER BY id DESC LIMIT 1'; //lay so luong hinh anh
+    $sql_lastid = 'SELECT id FROM posts  ORDER BY id DESC LIMIT 1'; //lay so luong hinh anh
     $result_lastid = $link->query($sql_lastid);
     $row_lastid = mysqli_fetch_assoc($result_lastid);
     $start_id = 1;
     $end_id = $row_lastid["id"];
-    $sql_show_recommend = 'SELECT * FROM photos 
+    $sql_show_recommend = 'SELECT * FROM posts 
                     WHERE id between ' . $start_id . ' and ' . $end_id . ' ORDER BY id DESC'; 
     $result_recommend = $link->query($sql_show_recommend);
+     // echo '<div>link: '. $result_recommend .'</div>';
     //print_r(mysqli_fetch_assoc($result_recommend));
-    // get username
+    // get avt
     $sqlav = 'SELECT *
     FROM users
     WHERE username = "' . $username2 . '";';
@@ -40,68 +41,69 @@
     // $sql_get_avt = 'SELECT avatar_url FROM users WHERE id=(SELECT id_user FROM photos WHERE id= ' . $row_r["id"] . ') ';
     // $result_get_avt = $link->query($sql_get_avt); 
     // $row_get_avt = mysqli_fetch_assoc($result_get_avt);
-    //print_r(mysqli_fetch_assoc($result_recommend)); 
-    if (mysqli_num_rows($result_recommend) > 0) {
-        while ($row_r = mysqli_fetch_assoc($result_recommend)) {
-            //print_r(mysqli_num_rows($result_recommend));
-            $sql_getid = 'SELECT * FROM users WHERE id=(SELECT id_user FROM photos WHERE id= ' . $row_r["id"] . ') ';
-            //print_r($row_r["status_photo"]);
-            $sql_get_avt = 'SELECT avatar_url FROM users WHERE id=(SELECT id_user FROM photos WHERE id= ' . $row_r["id"] . ') ';
-            $result_getid = $link->query($sql_getid);
-            $result_get_avt = $link->query($sql_get_avt); 
-            $row_get_avt = mysqli_fetch_assoc($result_get_avt);
-        // print_r($row_get_avt);
-            $row_getid = mysqli_fetch_assoc($result_getid);
-        // print_r($row_getid);
-            if ($row_r["status_photo"] == 0||$row_r["status_photo"] == 1) {
-                // print_r($row_r["status_photo"]);
-                $show_content = $show_content . ' 
-                <div class="col-md-12 col-lg-12 pt-4 item">
-                    <div class="card ds-card">
-                    <div class="card-body" >
-                    '.
-                        // echo $row_getid["avata_url"];
-                        // $result_get_avt
-                        '<a href="../home/profile.php?id=' . $rowav["id"] . '">
-                        <img class="box-icon-profile float-left img-re" src="../images/avatar/' . $row_get_avt["avatar_url"] . '" alt="" sizes="" srcset="">
-                        </a>'
-                    .'
-                    <div class="name-re-content">
-                    <a  href="profile.php?id=' . $row_getid["id"] . '">
-                    </div>
-                    ' . $row_getid["username"] . '</a>
-                    </div>
-
-                        <a class="lightbox" href="newsfeed.php?id=' . $row_r["id"] . '">
-                            <img class="img-fluid image scale-on-hover box-profile" src="../images/' . $row_r["images_url"] . '">
-                        </a>
-                        <div class="card-body">
-                            <button class="btn btn-outline-secondary">Like</button>
-                            <p>12 likes</p>
-                            <hr>
-                            <div class="comment-css">   
-                            <a  href="profile.php?id=' . $row_getid["id"] . '">
-                            ' . $row_getid["username"] . ':</a>
-                            <h9 class="text-content">' . $row_r["images_description"] . '</h9>
-                            <form action="comment.php" class="comment-form" method="POST">
-                            <hr>
-                            <div class="input-group mb-3">
-                            <input type="text" class="form-control cmt" placeholder="Add a Comment ..." aria-label="Comment" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                            <button class="input-group-text" id="basic-addon2">OK</button>
-                            </div>
+    //print_r(mysqli_fetch_assoc($result_recommend));
+    if(!empty($result_recommend)){
+        if  (mysqli_num_rows($result_recommend) > 0) {
+            while ($row_r = mysqli_fetch_assoc($result_recommend)) {
+                //print_r(mysqli_num_rows($result_recommend));
+                $sql_getid = 'SELECT * FROM users WHERE id=(SELECT user_id FROM posts WHERE id= ' . $row_r["id"] . ') ';
+                //print_r($row_r["status_photo"]);
+                $sql_get_avt = 'SELECT avatar_url FROM users WHERE id=(SELECT user_id FROM posts WHERE id= ' . $row_r["id"] . ') ';
+                $result_getid = $link->query($sql_getid);
+                $result_get_avt = $link->query($sql_get_avt); 
+                $row_get_avt = mysqli_fetch_assoc($result_get_avt);
+            // print_r($row_get_avt);
+                $row_getid = mysqli_fetch_assoc($result_getid);
+            // print_r($row_getid);
+                if ($row_r["status_post"] == 1) {
+                    // print_r($row_r["status_photo"]);
+                    $show_content = $show_content . ' 
+                    <div class="col-md-12 col-lg-12 pt-4 item">
+                        <div class="card ds-card">
+                        <div class="card-body" >
+                        '.
+                            // echo $row_getid["avata_url"];
+                            // $result_get_avt
+                            '<a href="../home/profile.php?id=' . $rowav["id"] . '">
+                            <img class="box-icon-profile float-left img-re" src="../images/avatar/' . $row_get_avt["avatar_url"] . '" alt="" sizes="" srcset="">
+                            </a>'
+                        .'
+                        <div class="name-re-content">
+                        <a  href="profile.php?id=' . $row_getid["id"] . '">
+                        </div>
+                        ' . $row_getid["username"] . '</a>
                         </div>
 
-                            </form>
+                            <a class="lightbox" href="newsfeed.php?id=' . $row_r["id"] . '">
+                                <img class="img-fluid image scale-on-hover box-profile" src="../images/' . $row_r["images_url"] . '">
+                            </a>
+                            <div class="card-body">
+                                <button class="btn btn-outline-secondary">Like</button>
+                                <p>12 likes</p>
+                                <hr>
+                                <div class="comment-css">   
+                                <a  href="profile.php?id=' . $row_getid["id"] . '">
+                                ' . $row_getid["username"] . ':</a>
+                                <h9 class="text-content">' . $row_r["images_description"] . '</h9>
+                                <form action="comment.php" class="comment-form" method="POST">
+                                <hr>
+                                <div class="input-group mb-3">
+                                <input type="text" class="form-control cmt" placeholder="Add a Comment ..." aria-label="Comment" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                <button class="input-group-text" id="basic-addon2">OK</button>
+                                </div>
+                            </div>
+
+                                </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>          
-            ';
-         }
+                    </div>          
+                ';
+            }
+            }
         }
     }
-
 
 
     ?>
@@ -114,15 +116,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title><?php echo $username2;?> ♣ BLUE SKY</title>
+        <script src="js/jquery-3.3.1.min.js"></script>
         <link rel="stylesheet" href="css/owl/owl.theme.default.min.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link href="css/simple-sidebar.css" rel="stylesheet">
         <link rel="stylesheet" href="css/hover.css">
-        <script src="../js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css" />
+        <script src="js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="grid-gallery.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,900,900i" rel="stylesheet">
 
 
     </head>
@@ -165,7 +165,19 @@
                     <div class="row">
                     <div class="col=md-2">  
                     </div>
-                        <div class="col-md-8">      
+                        <div class="col-md-8">  
+                        <div class="row mr-3" >
+                            <div class="form-group col-lg-12 border border-info p-2">
+                                <input class="form-control input-lg " id="inputlg" placeholder="Bạn đang nghĩ gì? ..."  type="text">
+                                <hr>
+                                <a href="upload.php">
+                                    <button class="btn btn-primary btn mx-2">Ảnh</button>
+                                </a>
+                                <a href="uploadvideo.php">
+                                    <button class="btn btn-primary btn mx-2">Video</button>
+                                </a>
+                            </div>
+                         </div> 
                         <?php
                         echo $show_content;
                         ?>
@@ -257,28 +269,14 @@
                     </div>
                 </div>
             </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-        <script>
-            baguetteBox.run('.grid-gallery', {
-                animation: 'slideIn'
-            });
-        </script>
-        <!--TODO:test load <div id="LoadNewsFeed"></div> -->
-        <!--TODO: That's button upload-->
-        <a href="upload.php">
-            <div class="ds-upload position-fixed">
-                <button class="" id="login" type=""> <img src="images/photo.png" alt="" srcset=""> Upload</button>
-            </div>
-        </a>
+
         <!--JS-->
-        <script src="js/jquery-3.3.1.min.js"></script>
+
         <script src="js/popper.min.js"></script>
         <script src="js/owl/owl.carousel.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
-        <script src="js/index.js"></script>
         <script src="js/sidebar.js"></script>
         <script src="js/owl/owl.js"></script>
-        <script src="js/totop.js"></script>
         
     </body>
 
