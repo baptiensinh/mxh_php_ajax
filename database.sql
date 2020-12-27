@@ -33,7 +33,7 @@ CREATE TABLE `admin` (
   `id` int(11) PRIMARY KEY AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `pass` varchar(50) NOT NULL,
+  `pass` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -44,13 +44,13 @@ INSERT INTO `admin` (`id`, `username`, `email`, `pass`) VALUES
 -- Table structure for table `users`
 
 CREATE TABLE `users` (
-  `id` int(11) PRIMARY KEY AUTO_INCREMENT,AUTO_INCREMENT=11;
+  `id` int PRIMARY KEY not null AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `pass` varchar(50) NOT NULL,
   `status_user` int(11) NOT NULL DEFAULT 0,
   `avatar_url` varchar(500) DEFAULT NULL,
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- status_user = 0 ---> hoạt động
@@ -70,20 +70,20 @@ CREATE TABLE `users` (
 
 -- Table structure for table `posts`
 
-CREATE TABLE `posts` (
-  `id` int(11) PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE `photos` (
+  `id` int(11) PRIMARY KEY  AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `status_post` int(11) NOT NULL DEFAULT 0,
+  `status_photo` int(11) NOT NULL DEFAULT 0,
   `description` varchar(500) DEFAULT NULL,
-  `images_url` varchar(500) NOT NULL
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `images_url` varchar(500) NOT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- status_post = 0 ---> private
--- status_post = 1 ---> public
--- status_post = 2 ---> ban
--- status_post = 3 ---> video private
--- status_post = 4 ---> video public
+-- status_photo = 0 ---> private
+-- status_photo = 1 ---> public
+-- status_photo = 2 ---> ban
+-- status_photo = 3 ---> video private
+-- status_photo = 4 ---> video public
 
 -- INSERT INTO `posts` (`id`, `user_id`, `status_post`, `description`, `images_url`) VALUES
 -- (1, 1, 1, 'mota 1 any', '1560431861.jpg'),
@@ -97,6 +97,14 @@ CREATE TABLE `posts` (
 -- (9, 6, 0, 'mt 9 any', '1560433785.jpg'),
 -- (10, 3, 1, 'llll', '1560494268.jpg')
 
+CREATE TABLE `posts` (
+  `id` int(11) PRIMARY KEY AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `status_post` int(11) NOT NULL DEFAULT 0,
+  `description` varchar(500) DEFAULT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 -- Table structure for table `comments`
 
@@ -104,7 +112,7 @@ CREATE TABLE `comments` (
   `id` int(11) PRIMARY KEY AUTO_INCREMENT,
   `post_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `content_cmt` varchar(500) NOT NULL
+  `content_cmt` varchar(500) NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -133,34 +141,43 @@ CREATE TABLE `relationships` (
   `user1` int(11) NOT NULL,
   `user2` int(11) NOT NULL,
   `friend_stt` int(1) NOT NULL,
-  'user_invite'int(11) NOT NULL
+  `user_invite` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-ALTER TABLE relationship add primary key(user1,user2);
+-- friend_stt = 0 --->  invite
+-- friend_stt = 1 --->  accepted
+-- friend_stt = 2 --->  deleted
 
 
-CREATE TABLE `mxh_post`.`post_group` ( 
-  `id_group` INT(11) NOT NULL ,
+
+CREATE TABLE `posts_photos` ( 
+  `id_photo` INT(11) NOT NULL ,
   `id_post` INT(11) NOT NULL , 
-  `stt_group` INT(1) NOT NULL ,
-  PRIMARY KEY (`id_group`, `id_post`)
+  `stt_group` INT(1)
   ) ENGINE = InnoDB;
 
 
 
 
 
-ALTER TABLE `posts` ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
-ALTER TABLE `post_group` ADD CONSTRAINT `group_posts_fk` FOREIGN KEY (`id_post`) REFERENCES `posts` (`id`)
+ALTER TABLE `photos` ADD CONSTRAINT `ps_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+ALTER TABLE `posts_photos` ADD CONSTRAINT `group_ps_fk1` FOREIGN KEY (`id_post`) REFERENCES `posts` (`id`);
+ALTER TABLE `posts_photos` ADD CONSTRAINT `group_ps_fk2` FOREIGN KEY (`id_photo`) REFERENCES `photos` (`id`);
+
 
 ALTER TABLE `comments` ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 ALTER TABLE `comments` ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`);
 
-ALTER TABLE `relationship` ADD CONSTRAINT `re_ibfk_1` FOREIGN KEY (`user1`) REFERENCES `users` (`id`)
-ALTER TABLE `relationship` ADD CONSTRAINT `re_ibfk_2` FOREIGN KEY (`user2`) REFERENCES `users` (`id`)
+ALTER TABLE `relationships` ADD CONSTRAINT `re_ibfk_1` FOREIGN KEY (`user1`) REFERENCES `users` (`id`);
+ALTER TABLE `relationships` ADD CONSTRAINT `re_ibfk_2` FOREIGN KEY (`user2`) REFERENCES `users` (`id`);
 
 
 ALTER TABLE `icons` ADD CONSTRAINT `icons_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 ALTER TABLE `icons` ADD CONSTRAINT `icons_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`);
+
+
+ALTER TABLE `posts` ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
 
 

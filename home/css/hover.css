@@ -466,3 +466,11 @@ output{
     width: 280px;
     height: 290px;
 }
+.img-re-sug{
+    width: 43px;
+    height: 43px;
+}
+.name-re-sugg{
+    position: relative;
+    padding-left:5px ;
+}

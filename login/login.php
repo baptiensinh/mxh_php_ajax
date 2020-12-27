@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     } else {
         echo '<script language="javascript">';
-        echo 'alert("Login unsuccessful.\nEmail or password is incorrect.\nYou will return Login, right now.")';
+        echo 'alert("Email or password is incorrect.\nYou will return Login")';
         echo '</script>';
         echo '<script language="javascript">';
         echo 'window.location.href = "../login/"';

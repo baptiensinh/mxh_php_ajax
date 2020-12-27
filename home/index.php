@@ -4,6 +4,8 @@
 
 
 
+    $show_avatar_sugg="";
+    $username_sugg="";
     $show_content = '';
     $sql_lastid = 'SELECT id FROM posts  ORDER BY id DESC LIMIT 1'; //lay so luong hinh anh
     $result_lastid = $link->query($sql_lastid);
@@ -31,6 +33,54 @@
         </a>
         ';
     } else {
+            // Suggestions user
+                // kiem tra ban be hay chưa
+                $friends=get_friends($rowav["id"],$link);
+                $invites=get_invites($rowav["id"],$link);
+                $fr_inv=array("");
+                array_push($fr_inv,$friends);
+                array_push($fr_inv,$invites);
+                foreach ($colors as $value) {
+                    echo "$value <br>";
+                  };
+              //lay so luong user
+                // $sql_fr = 'SELECT COUNT(id)
+                // FROM users
+                // WHERE id != '.$_SESSION["id"] .';'; 
+                // $result_fr = $link->query($sql_fr);
+                // // print_r($result_lastid);
+                // $row_fr = mysqli_fetch_assoc($result_fr);
+
+                $rand2=array(0);
+                for ($i=1;$i<8;$i++){
+                    $rand=rand(1,count($friends));
+                    // print_r($rand);
+                    // echo "abc";
+                    // print_r($rand2);
+                    if ($rand!=$_SESSION["id"]&& !in_array($rand, $rand2)){
+                        // echo "if";
+                        $sql_fr = 'SELECT *
+                            FROM users
+                            WHERE id = '.$rand .';';
+                        $result_fr = $link->query($sql_fr);
+                        $suggestions=mysqli_fetch_assoc($result_fr);
+                        $show_avatar_sugg= $show_avatar_sugg.'<div class="row m-0 pl-2">
+                        
+                            <a href="../home/profile.php?id=' . $suggestions["id"] . '">
+                                <img class="box-icon-profile float-left img-re-sug" src="../images/avatar/' . $suggestions["avatar_url"] . '" alt="" sizes="" srcset="">
+                            </a>
+                            <div class="name-re-sugg">'.$suggestions["username"].'
+                                <div class="blockquote-footer">Suggested for you</div>
+                            </div>
+                            <a class="ml-5" href="../home/addfriend.php?id=' . $suggestions["id"] . '"">Add Friend</a>
+
+
+                        </div> ';
+                        array_push($rand2,$rand);
+
+                    }
+                }
+    //// end Suggestions user
     $show_avatar = '<a href="../home/profile.php?id=' . $rowav["id"] . '">
         <img class="box-icon-profile float-left img-re" src="../images/avatar/' . $rowav["avatar_url"] . '" alt="" sizes="" srcset="">
         </a>
@@ -163,107 +213,120 @@
             <div class="container bg-white">
                 <div class="container bg-white">
                     <div class="row">
-                    <div class="col=md-2">  
-                    </div>
-                        <div class="col-md-8">  
-                        <div class="row mr-3" >
-                            <div class="form-group col-lg-12 border border-info p-2">
-                                <input class="form-control input-lg " id="inputlg" placeholder="Bạn đang nghĩ gì? ..."  type="text">
-                                <hr>
-                                <a href="upload.php">
-                                    <button class="btn btn-primary btn mx-2">Ảnh</button>
-                                </a>
-                                <a href="uploadvideo.php">
-                                    <button class="btn btn-primary btn mx-2">Video</button>
-                                </a>
-                            </div>
-                         </div> 
-                        <?php
-                        echo $show_content;
-                        ?>
+                        <div class="col=md-2">  
                         </div>
-                        <div class="col=md-4">
-                            <div class="position-fixed">
-                                <div class="row">
-                                <!-- <img class="box-icon-profile float-left img-re" src="images/user.jpg" alt="" sizes="" srcset=""> -->
-                                <?php
-                                    echo $show_avatar;
-                                ?>
-                                <div class="name-re"><?php echo $log_reg_user;?></div>
-                                    
+                        <div class="col-md-8">  
+                            <div class="row mr-3" >
+                                <div class="form-group col-lg-12 border border-info p-2">
+                                    <input class="form-control input-lg " id="inputlg" placeholder="Bạn đang nghĩ gì? ..."  type="text">
+                                    <hr>
+                                    <a href="upload.php">
+                                        <button class="btn btn-primary btn mx-2">Ảnh</button>
+                                    </a>
+                                    <a href="uploadvideo.php">
+                                        <button class="btn btn-primary btn mx-2">Video</button>
+                                    </a>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-5">
-                                    Suggestions For You
-                                    </div>
-                                    <div class="col-md-2">
-                                        <a class="float-right" href="">See all</a></div>
+                             </div> 
+                                 <div>
+                                    <?php
+                                    echo $show_content;
+                                    ?>
+                                </div>
+                        </div>
+                                    <div class="col-md-4">
+                                        <div class="position-fixed">
+                                             <div class="row">
+                                                <!-- <img class="box-icon-profile float-left img-re" src="images/user.jpg" alt="" sizes="" srcset=""> -->
+                                                <?php
+                                                    echo $show_avatar;
+                                                ?>
+                                                <div class="name-re"><?php echo $log_reg_user;?></div>
+                                                
+                                             </div>
+                                              <hr>
+                                                 <!-- Suggestions -->
+                                             <div class="row">
+                                                <div class="col-md-5">
+                                                Suggestions For You
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <a class="float-right" href="">See all</a>
+                                                </div>
 
-                                </div>
-                                <div class="row">
-                                <div class="col-md-5">
-                                        <ul class=" list-inline">
-                                            <li class="list-inline-item"><a class="" href="">Help</a></li>
-                                            <li class="list-inline-item"><a class=" " href="" rel="nofollow noopener noreferrer" target="_blank">About</a></li>
-                                            <li class="list-inline-item"><a class="" href="">Press</a></li>
-                                            <li class="list-inline-item"><a class="" href="">API</a></li>
-                                            <li class="list-inline-item"><a class="" href="">Jobs</a></li>
-                                            <li class="list-inline-item"><a class="" href="">Privacy</a></li>
-                                            <li class="list-inline-item"><a class="" href="">Terms</a></li>
-                                            <li class="list-inline-item"><a class="" href="">Locations</a></li>
-                                            <li class="list-inline-item"><a class="" href="">Top Accounts</a></li>
-                                            <li class="list-inline-item"><a class="" href="">Hashtags</a></li>
-                                            <li class="list-inline-item"><span class="">Language<select aria-label="Switch Display Language" class="">
-                                                <option value="af">Afrikaans</option>
-                                                <option value="cs">Čeština</option>
-                                                <option value="da">Dansk</option>
-                                                <option value="de">Deutsch</option>
-                                                <option value="el">Ελληνικά</option>
-                                                <option  selected="selected" value="en">English</option>
-                                                <option value="en-gb">English (UK)</option>
-                                                <option value="es">Español (España)</option>
-                                                <option value="es-la">Español</option>
-                                                <option value="fi">Suomi</option>
-                                                <option value="fr">Français</option>
-                                                <option value="id">Bahasa Indonesia</option>
-                                                <option value="it">Italiano</option>
-                                                <option value="ja">日本語</option>
-                                                <option value="ko">한국어</option>
-                                                <option value="ms">Bahasa Melayu</option>
-                                                <option value="nb">Norsk</option>
-                                                <option value="nl">Nederlands</option>
-                                                <option value="pl">Polski</option>
-                                                <option value="pt-br">Português (Brasil)</option>
-                                                <option value="pt">Português (Portugal)</option>
-                                                <option value="ru">Русский</option>
-                                                <option value="sv">Svenska</option>
-                                                <option value="th">ภาษาไทย</option>
-                                                <option value="tl">Filipino</option>
-                                                <option value="tr">Türkçe</option>
-                                                <option value="zh-cn">中文(简体)</option>
-                                                <option value="zh-tw">中文(台灣)</option>
-                                                <option value="bn">বাংলা</option>
-                                                <option value="gu">ગુજરાતી</option>
-                                                <option value="hi">हिन्दी</option>
-                                                <option value="hr">Hrvatski</option>
-                                                <option value="hu">Magyar</option>
-                                                <option value="kn">ಕನ್ನಡ</option>
-                                                <option value="ml">മലയാളം</option><option value="mr">मराठी</option><option value="ne">नेपाली</option>
-                                                <option value="pa">ਪੰਜਾਬੀ</option><option value="si">සිංහල</option><option value="sk">Slovenčina</option>
-                                                <option value="ta">தமிழ்</option><option value="te">తెలుగు</option><option value="vi">Tiếng Việt</option>
-                                                <option value="zh-hk">中文(香港)</option><option value="bg">Български</option><option value="fr-ca">Français (Canada)</option>
-                                                <option value="ro">Română</option><option value="sr">Српски</option><option value="uk">Українська</option>
-                                            </select>
-                                            </span>
-                                        </li>
-                                        </ul>
-                            </div>
-                                </div>
-                                <div >
-                                © 2020 BULE SKY FROM EARTH :))
-                                </div>
-                            </div>
-                    
+                                             </div>
+                                            <div class="row d-inline m-0"> 
+                                                <?php
+                                                    echo $show_avatar_sugg;
+                                                ?>
+                                             </div>
+                                    
+                                        
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                    <ul class=" list-inline">
+                                                        <li class="list-inline-item"><a class="" href="">Help</a></li>
+                                                        <li class="list-inline-item"><a class=" " href="" rel="nofollow noopener noreferrer" target="_blank">About</a></li>
+                                                        <li class="list-inline-item"><a class="" href="">Press</a></li>
+                                                        <li class="list-inline-item"><a class="" href="">API</a></li>
+                                                        <li class="list-inline-item"><a class="" href="">Jobs</a></li>
+                                                        <li class="list-inline-item"><a class="" href="">Privacy</a></li>
+                                                        <li class="list-inline-item"><a class="" href="">Terms</a></li>
+                                                        <li class="list-inline-item"><a class="" href="">Locations</a></li>
+                                                        <li class="list-inline-item"><a class="" href="">Top Accounts</a></li>
+                                                        <li class="list-inline-item"><a class="" href="">Hashtags</a></li>
+                                                        <li class="list-inline-item"><span class="">Language<select aria-label="Switch Display Language" class="">
+                                                            <option value="af">Afrikaans</option>
+                                                            <option value="cs">Čeština</option>
+                                                            <option value="da">Dansk</option>
+                                                            <option value="de">Deutsch</option>
+                                                            <option value="el">Ελληνικά</option>
+                                                            <option  selected="selected" value="en">English</option>
+                                                            <option value="en-gb">English (UK)</option>
+                                                            <option value="es">Español (España)</option>
+                                                            <option value="es-la">Español</option>
+                                                            <option value="fi">Suomi</option>
+                                                            <option value="fr">Français</option>
+                                                            <option value="id">Bahasa Indonesia</option>
+                                                            <option value="it">Italiano</option>
+                                                            <option value="ja">日本語</option>
+                                                            <option value="ko">한국어</option>
+                                                            <option value="ms">Bahasa Melayu</option>
+                                                            <option value="nb">Norsk</option>
+                                                            <option value="nl">Nederlands</option>
+                                                            <option value="pl">Polski</option>
+                                                            <option value="pt-br">Português (Brasil)</option>
+                                                            <option value="pt">Português (Portugal)</option>
+                                                            <option value="ru">Русский</option>
+                                                            <option value="sv">Svenska</option>
+                                                            <option value="th">ภาษาไทย</option>
+                                                            <option value="tl">Filipino</option>
+                                                            <option value="tr">Türkçe</option>
+                                                            <option value="zh-cn">中文(简体)</option>
+                                                            <option value="zh-tw">中文(台灣)</option>
+                                                            <option value="bn">বাংলা</option>
+                                                            <option value="gu">ગુજરાતી</option>
+                                                            <option value="hi">हिन्दी</option>
+                                                            <option value="hr">Hrvatski</option>
+                                                            <option value="hu">Magyar</option>
+                                                            <option value="kn">ಕನ್ನಡ</option>
+                                                            <option value="ml">മലയാളം</option><option value="mr">मराठी</option><option value="ne">नेपाली</option>
+                                                            <option value="pa">ਪੰਜਾਬੀ</option><option value="si">සිංහල</option><option value="sk">Slovenčina</option>
+                                                            <option value="ta">தமிழ்</option><option value="te">తెలుగు</option><option value="vi">Tiếng Việt</option>
+                                                            <option value="zh-hk">中文(香港)</option><option value="bg">Български</option><option value="fr-ca">Français (Canada)</option>
+                                                            <option value="ro">Română</option><option value="sr">Српски</option><option value="uk">Українська</option>
+                                                        </select>
+                                                        </span>
+                                                    </li>
+                                                    </ul>
+                                            </div>
+                                        </div>
+                                        <div >
+                                        © 2020 BULE SKY FROM EARTH :))
+                                        </div>
+                                    </div>
+                                    </div>
                             
                         </div>
                     </div>

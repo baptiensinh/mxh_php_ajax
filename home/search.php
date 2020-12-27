@@ -2,35 +2,62 @@
 require_once "../includes/session.php";
 require_once "../includes/connectdb.php";
 $search = $_POST['search'];
-$show_content = '';
-$sql_show_recommend = 'SELECT * FROM photos WHERE title LIKE "' . $search . '%" OR images_description LIKE "' . $search . '%" ORDER BY id DESC';
-$result_recommend = $link->query($sql_show_recommend);
-if (mysqli_num_rows($result_recommend) > 0) {
-    while ($row_r = mysqli_fetch_assoc($result_recommend)) {
-        $sql_getid = 'SELECT * FROM users WHERE id=(SELECT id_user FROM photos WHERE id= ' . $row_r["id"] . ') ';
-        $result_getid = $link->query($sql_getid);
-        $row_getid = mysqli_fetch_assoc($result_getid);
-        if ($row_r["status_photo"] == 1) {
-            $show_content = $show_content . '
-            <div class="col-md-12 col-lg-4 pt-4 item">
-                <div class="card ds-card">
-                    <a class="lightbox" href="../home/newsfeed.php?id=' . $row_r["id"] . '">
-                        <img class="img-fluid image scale-on-hover box-profile" src="../images/' . $row_r["images_url"] . '">
-                    </a>
-                    <div class="card-body">
-                        <p class="card-text"> ' . $row_r["images_description"] . '</p>
-                        <p class="card-text"> Upload by 
-                        <a href="../home/profile.php?id=' . $row_getid["id"] . '">
-                        ' . $row_getid["username"] . '</a></p>
-                    </div>
-                </div>
-            </div>          
-        ';
-        }
+$show_content = '<table>';
+
+// Search username
+$sql_show_recommend_user = 'SELECT * FROM users WHERE username LIKE "' . $search . '%" OR email LIKE "' . $search . '%"';
+$result_recommend_user = $link->query($sql_show_recommend_user);
+
+// Search description post
+$sql_show_recommend_post = 'SELECT * FROM posts WHERE description LIKE "%' . $search . '%"';
+$result_recommend_post = $link->query($sql_show_recommend_post);
+
+
+if (mysqli_num_rows($result_recommend_user) > 0) {
+    while ($rowSearch = mysqli_fetch_assoc($result_recommend_user)) {
+            $show_content = $show_content . 
+               '<tr>
+                    <td>
+                        <a class="lightbox" href="../home/profile.php?id=' . $rowSearch["id"] . '">
+                            <img class="img-fluid image scale-on-hover box-profile" style=" width:150px;height:100px;" src="../images/' . $rowSearch["avatar_url"] . '">
+                        </a>
+                    </td>
+                    <td>
+                        <h5><a class="lightbox" href="../home/profile.php?id=' . $rowSearch["id"] . '"> ' . $rowSearch["username"] . '</a></h5>
+                    </td>
+                </tr>';
     }
-} else {
-    $show_content = '<h2 class="text-white pt-5">No result for: ' . $search.'</h2>';
+} else
+if (mysqli_num_rows($result_recommend_post) > 0) {
+    while ($rowSearch = mysqli_fetch_assoc($result_recommend_post)) {
+
+        // Get information photo, post, user
+        $sql_get_photo  =  'SELECT p.description AS pdes, p.images_url AS img_url, u.username AS username, u.id AS id
+                            FROM photos p JOIN posts_photos pp JOIN posts JOIN users u
+                            ON p.id = pp.photo_id AND pp.post_id=posts.id AND posts.user_id = u.id';
+
+        $result_get_photo = $link->query($sql_get_photo);
+        $row_get_photo = mysqli_fetch_assoc($result_get_photo);
+
+            $show_content = $show_content . 
+               '<tr>
+                    <td>
+                        <a class="lightbox" href="../home/newsfeed.php?id=' . $rowSearch["id"] . '">
+                            <img class="img-fluid image scale-on-hover box-profile" style=" width:150px;height:100px;" src="../images/' . $row_get_photo["img_url"] . '">
+                        </a>
+                    </td>
+                    <td>
+                        <a class="lightbox" href="../home/profile.php?id=' . $sql_get_photo["id"] . '"> <h5>' . $row_get_photo["username"] . '</h5></a>
+                        <h6>Post Description: <a class="lightbox" href="../home/newsfeed.php?id=' . $rowSearch["id"] . '"> ' . $rowSearch["description"] . '</h6></a>
+                        <p> Photo Description: ' . $row_get_photo["pdes"] . '</p>
+                    </td>
+                </tr>';
+    }
+} 
+else {
+    $show_content = '<h2 class="text-black pt-5">No result for: ' . $search.'</h2>';
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,11 +123,11 @@ if (mysqli_num_rows($result_recommend) > 0) {
     <!--TODO:Content-->
     <section class="gallery-block grid-gallery">
         <div class="container">
-            <h3 class="text-white pt-5">Search Result for:
+            <h4 class="text-black pt-5">Search Result for:
                 <?php
                 echo $search;
                 ?>
-            </h3>
+            </h4>
             <div class="row">
                 <?php
                 echo $show_content;

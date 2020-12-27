@@ -15,6 +15,7 @@ if (isset($_SESSION["username"])) {
         <li class="text-white ">
             <a class="text-color" href="../home/profile.php?id='.$_SESSION["id"].'"> ' . $_SESSION["username"] . '</a>
         </li>';
+        $id2=$_SESSION["id"];
         $username2=$_SESSION["username"];
         
       
