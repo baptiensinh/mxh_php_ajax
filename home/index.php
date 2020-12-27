@@ -58,16 +58,18 @@
                 $rand2=array(0);
                 for ($i=1;$i<8;$i++){
                     $rand=rand(1,count($not_friends));
-                    // print_r($rand);
+                    
                     // echo "abc";
                     // print_r($rand2);
                     if ($rand!=$_SESSION["id"]&& !in_array($rand, $rand2)){
                         // echo "if";
                         $sql_fr = 'SELECT *
                             FROM users
-                            WHERE id = '.$rand .';';
+                            WHERE id = '.$not_friends[$rand] .';';
                         $result_fr = $link->query($sql_fr);
+
                         $suggestions=mysqli_fetch_assoc($result_fr);
+
                         $show_avatar_sugg= $show_avatar_sugg.'<div class="row m-0 pl-2">
                         
                             <a href="../home/profile.php?id=' . $suggestions["id"] . '">

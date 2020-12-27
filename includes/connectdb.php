@@ -138,7 +138,11 @@ function not_friends($userid,$link){
         }
     }
     $result=array_diff($not_friends,$row_fr2);
-    return $result;
+    $fini=array();
+    foreach($result as $value){
+        array_push( $fini,$value);
+    }
+    return $fini;
     // foreach($result as $value)
     // {   
     //     print_r($value);
