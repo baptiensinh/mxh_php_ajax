@@ -25,6 +25,12 @@
     $resultav = $link->query($sqlav);
     //echo '<div>link: '. $link->query($sqlav) .'</div>';
     $rowav = mysqli_fetch_assoc($resultav);
+    // $friends=get_friends($rowav["id"],$link);
+    // $invites=get_invites($rowav["id"],$link);
+    $not_fr=not_friends($rowav["id"],$link);
+    //$ivs=get_inv_sent($rowav["id"],$link);
+
+    //print_r($not_fr);
     //TODO: show avatar
     // echo '<div>link: '. $username2 .'</div>';
     if ($rowav["avatar_url"] == null && $username2==null) {
@@ -35,14 +41,12 @@
     } else {
             // Suggestions user
                 // kiem tra ban be hay chưa
-                $friends=get_friends($rowav["id"],$link);
-                $invites=get_invites($rowav["id"],$link);
-                $fr_inv=array("");
-                array_push($fr_inv,$friends);
-                array_push($fr_inv,$invites);
-                foreach ($colors as $value) {
-                    echo "$value <br>";
-                  };
+                $not_friends=not_friends($rowav["id"],$link);
+                foreach($not_friends as $value)
+                {   
+                    $sql_fr1="SELECT * FROM users 
+                    WHERE id=$value;"; 
+                }
               //lay so luong user
                 // $sql_fr = 'SELECT COUNT(id)
                 // FROM users
@@ -53,7 +57,7 @@
 
                 $rand2=array(0);
                 for ($i=1;$i<8;$i++){
-                    $rand=rand(1,count($friends));
+                    $rand=rand(1,count($not_friends));
                     // print_r($rand);
                     // echo "abc";
                     // print_r($rand2);
