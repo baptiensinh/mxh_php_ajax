@@ -108,6 +108,9 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
             </form>
         </div>
     </div>';
+    $uploadbtt2='
+
+    ';
 }
 else{
     
@@ -288,8 +291,9 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
                     </div>
                         <div class="row">
                             <?php
-                            echo $showphotoid;
                             echo $uploadbtt;
+                            echo $showphotoid;
+                            
                             ?>
                             
                         </div>

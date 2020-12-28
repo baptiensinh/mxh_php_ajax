@@ -9,7 +9,7 @@
             // $sql_insert = "INSERT INTO relationships (user1,user2, friend_stt,user_invite) VALUES
             //     ('" . $_SESSION["id"] . "','" . $_GET["id"] . "','" . 0 . "','" .$_SESSION["id"]. "');";
             $sql_insert="UPDATE relationships set friend_stt=1 where user1='$id' && user2='".$_SESSION["id"]."'";
-    
+            
             $insert=mysqli_query($link, $sql_insert);
             if($insert){
                 echo '<script language="javascript">';
