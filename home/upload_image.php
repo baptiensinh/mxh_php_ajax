@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             //TODO:  The str_replace() function replaces some characters with some other characters in a string
             $final_file = str_replace(' ', '-',$new_file_name);
 
-            $final_file = time().rand(100,999).".jpg";
+            $final_file = time().rand(1000,9999).".jpg";
 
 
             // $ext=pathinfo($file_name,PATHINFO_EXTENSION);
@@ -33,7 +33,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
             if (move_uploaded_file($file_tmp, $f . $final_file)) {
                         //$image = $final_file;
-                        $sql = "INSERT INTO posts (user_id, status_post, images_url) VALUES ('" . $id_username . "','0','" . $final_file . "')";
+                        
+                        $sql = "INSERT INTO photos (user_id, status_photo, images_url) VALUES ('" . $id_username . "','0','" . $final_file . "')";
+                        echo " alo";
+                        print_r($sql);
                         mysqli_query($link, $sql);
                     }
             else {

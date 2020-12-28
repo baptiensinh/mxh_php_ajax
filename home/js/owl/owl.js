@@ -1,11 +1,12 @@
 
 
+
 $(document).ready(function () {
 
     // ANIMATEDLY DISPLAY THE NOTIFICATION COUNTER.
     $('#noti_Counter')
         .css({ opacity: 0 })
-        .text('7')      // ADD DYNAMIC VALUE (YOU CAN EXTRACT DATA FROM DATABASE OR XML).
+        .text("!")      // ADD DYNAMIC VALUE (YOU CAN EXTRACT DATA FROM DATABASE OR XML).
         .css({ top: '-10px' })
         .animate({ top: '15px', opacity: 1 }, 500);
 
@@ -36,7 +37,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#notifications').click(function () {
-        return false;       // DO NOTHING WHEN CONTAINER IS CLICKED.
-    });
+    // $('#notifications').click(function () {
+    //     return false;       // DO NOTHING WHEN CONTAINER IS CLICKED.
+    // });
 });

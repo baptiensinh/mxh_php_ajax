@@ -21,7 +21,7 @@ if ($row_showusername['status_user'] == 1) {
 }
 // : show image for user name
 $showphotoid = '';
-$sql_showphotoid = 'SELECT * FROM posts
+$sql_showphotoid = 'SELECT * FROM photos
                         WHERE user_id = "' . $id . '" 
                     ORDER BY id DESC';
 $result_showphotoid = $link->query($sql_showphotoid);
@@ -31,8 +31,8 @@ if(!empty($result_showphotoid)){
         while ($row_showphotoid = mysqli_fetch_assoc($result_showphotoid)) {
             // isset:exist
             if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
-                if ($row_showphotoid["status_post"] == 1) {$countpost++;};
-                if ($row_showphotoid["status_post"] == 0 || $row_showphotoid["status_post"] == 1) {
+                if ($row_showphotoid["status_photo"] == 1) {$countpost++;};
+                if ($row_showphotoid["status_photo"] == 0 || $row_showphotoid["status_photo"] == 1) {
                     $countphoto=$countphoto+1;
                     $showphotoid = $showphotoid . '
                 <div class="col-md-12 col-lg-4 col-md-3 pt-4 item">
@@ -305,6 +305,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/index.js"></script>
     <script src="js/totop.js"></script>
+    <script src="js/owl/owl.js"></script>
     <div  style="text-align:center " class="fixed-bottom">
          <ul class=" list-inline">
             <li class="list-inline-item"><a class="" href="">Help</a></li>

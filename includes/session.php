@@ -1,8 +1,15 @@
 <?php
 session_start();
 // $log_reg=$_SESSION["username"];
+require_once "../includes/connectdb.php";
 $log_reg = '';
+
+
+
 if (isset($_SESSION["username"])) {
+    $id2=$_SESSION["id"];
+    $username2=$_SESSION["username"];
+    $show=get_invites($id2,$link);
     $log_reg = '
                <a href="" class="mr-4">
                     <div class="ds-hover nav-item text-white pt-2 nav-link     ">
@@ -14,7 +21,7 @@ if (isset($_SESSION["username"])) {
                     <div id="noti_Counter"></div>   <!--SHOW NOTIFICATIONS COUNT.-->
                     
                     <!--A CIRCLE LIKE BUTTON TO DISPLAY NOTIFICATION DROPDOWN.-->
-                    <div id="noti_Button"></div>    
+                    <div id="noti_Button"><img src="/images/notification.png" alt=""></div>    
 
                     <!--THE NOTIFICAIONS DROPDOWN BOX.-->
                     <div id="notifications">
@@ -24,25 +31,13 @@ if (isset($_SESSION["username"])) {
                         <div class="col-md-5">
                                                 Friend Requests
                                                 </div>
-                            <div class="row m-0 pl-2">
-                            
-                            <a href="../home/profile.php?id=4">
-                                <img class="box-icon-profile float-left img-re-sug" src="../images/avatar/user.png" alt="" sizes="" srcset="">
-                            </a>
-                            <div class="name-re-sugg">ABD
-                                <div class="blockquote-footer">Suggested for you</div>
-                            </div>
-                            <a class="ml-5" href="../home/addfriend.php?id=4">Accept</a>
-
-
-                        </div>
-
+                            '. $show .'
                         </div>
                         </div>
                         <div class="seeAll"><a href="#">See All</a></div>
                     </div>
                  </div>
-            <li class="ds-hover nav-item text-white">
+            <li class="ds-hover nav-item text-white"> 
                 <a class="nav-link pl-1" href="../home/profile.php?id='.$_SESSION["id"].'"> ' . $_SESSION["username"] . '</a>
             </li>
             <li class="ds-hover nav-item text-white ">
@@ -55,8 +50,8 @@ if (isset($_SESSION["username"])) {
         <li class="text-white ">
             <a class="text-color" href="../home/profile.php?id='.$_SESSION["id"].'"> ' . $_SESSION["username"] . '</a>
         </li>';
-        $id2=$_SESSION["id"];
-        $username2=$_SESSION["username"];
+        
+        
         
       
 } else {
@@ -69,6 +64,7 @@ if (isset($_SESSION["username"])) {
             </li>
         ';
         $username2=null; 
+        $id2=null;
         $log_reg_user=null;
 }
 

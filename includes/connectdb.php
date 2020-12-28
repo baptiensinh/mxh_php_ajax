@@ -27,7 +27,7 @@ function get_friends($userid,$link){
                 WHERE id = '  $rf  ';"; 
             $rs=$link->query($fr1);
             $r_fr1 = mysqli_fetch_assoc($rs);
-
+            array_push($row_fr3,$r_fr1["id"]);
             //dien vo day
         }
     }
@@ -44,9 +44,15 @@ function get_friends($userid,$link){
                 WHERE id = '  $rf  ';"; 
             $rs=$link->query($fr1);
             $r_fr1 = mysqli_fetch_assoc($rs);
-
+            array_push($row_fr3,$r_fr1["id"]);
             //dien vo day
         }
+    }
+    if($row_fr3){
+        // print_r($row_fr3);
+        return $row_fr3;
+    }else{
+        return 0;
     }
 }
 
@@ -54,7 +60,7 @@ function get_invites($userid,$link){
     $sql_fr1="SELECT user1 as id,friend_stt,create_time FROM relationships 
          WHERE user2 = ' $userid 'and friend_stt=0;"; 
     $result_fr1 = $link->query($sql_fr1);
-
+    $show="";
     if ($result_fr1->num_rows > 0){
         while($row_fr1 = mysqli_fetch_assoc($result_fr1)){
             $rf=$row_fr1["id"];
@@ -62,9 +68,25 @@ function get_invites($userid,$link){
                 WHERE id = '  $rf  ';"; 
             $rs=$link->query($fr1);
             $r_fr1 = mysqli_fetch_assoc($rs);
-
-            //dien vo day
+            $show=$show.'
+            <div class="row m-0 pl-2">
+                <div class="col-8">   
+                    <a href="../home/profile.php?id=' . $r_fr1["id"] . '">
+                        <img class="box-icon-profile float-left img-re-sug" src="../images/avatar/'. $r_fr1["avatar_url"] .'" alt="" sizes="" srcset="">
+                        <div class="name-re-sugg">'.$r_fr1["username"].'</div>
+                    </a>
+                   
+                </div>
+                <div class="col-4">
+                    <a href="../home/accept.php?id='.$r_fr1["id"].'">
+                    Accept
+                    </a>
+                </div>  
+            </div>
+            '
+            ;
         }
+        return $show;
     }
 }
 
@@ -76,6 +98,7 @@ function get_inv_sent($userid,$link){
     $result_fr1 = $link->query($sql_fr1);
     // print_r($result_fr1);
     // echo"<br>";
+    
     if ($result_fr1->num_rows > 0){
         while($row_fr1 = mysqli_fetch_assoc($result_fr1)){
             $rf=$row_fr1["id"];
@@ -83,12 +106,33 @@ function get_inv_sent($userid,$link){
                 WHERE id = " . $rf  .";"; 
             $rs=$link->query($fr1);
             $r_fr1 = mysqli_fetch_assoc($rs);
-            print_r($r_fr1);
-            //dien vo day
+            
+
         }
+        return $show;
     }
 }
-
+function get_inv_count($userid,$link){
+    $sql_fr1="SELECT user1 as id,friend_stt,create_time FROM relationships 
+         WHERE user2 = ' $userid ' and friend_stt=0;"; 
+    // print_r($sql_fr1);
+    // echo "<br>";
+    $result_fr1 = $link->query($sql_fr1);
+    // print_r($result_fr1);
+    // echo"<br>";
+    $show=0;
+    if ($result_fr1->num_rows > 0){
+        while($row_fr1 = mysqli_fetch_assoc($result_fr1)){
+            $rf=$row_fr1["id"];
+            $fr1="SELECT * FROM users
+                WHERE id = " . $rf  .";"; 
+            $rs=$link->query($fr1);
+            $r_fr1 = mysqli_fetch_assoc($rs);
+            $show++;
+        }
+        return $show;
+    }
+}
 
 
 

@@ -155,6 +155,17 @@ CREATE TABLE `posts_photos` (
   `stt_group` INT(1)
   ) ENGINE = InnoDB;
 
+  CREATE TABLE chat (
+  msg_id int(11) PRIMARY KEY AUTO_INCREMENT,
+  f_user int(11) NOT NULL,
+  t_user int(11) NOT NULL,
+  f_message varchar(999) NOT NULL,
+  create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE chat ADD CONSTRAINT ch_ibfk_1 FOREIGN KEY (f_user) REFERENCES users (id);
+ALTER TABLE chat ADD CONSTRAINT ch_ibfk_2 FOREIGN KEY (t_user) REFERENCES users (id);
+
 
 
 

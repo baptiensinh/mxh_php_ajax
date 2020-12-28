@@ -6,6 +6,7 @@
 
     $show_avatar_sugg="";
     $username_sugg="";
+    $count=get_inv_count($id2,$link);
     $show_content = '';
     $sql_lastid = 'SELECT id FROM posts  ORDER BY id DESC LIMIT 1'; //lay so luong hinh anh
     $result_lastid = $link->query($sql_lastid);
@@ -20,12 +21,13 @@
     // get avt
     $sqlav = 'SELECT *
     FROM users
-    WHERE username = "' . $username2 . '";';
+    WHERE id = "' . $id2 . '";';
     //print_r( $row_lastid);
     $resultav = $link->query($sqlav);
     //echo '<div>link: '. $link->query($sqlav) .'</div>';
     $rowav = mysqli_fetch_assoc($resultav);
-    // $friends=get_friends($rowav["id"],$link);
+
+     $friends=get_friends($rowav["id"],$link);
     // $invites=get_invites($rowav["id"],$link);
 
     //$ivs=get_inv_sent($rowav["id"],$link);
@@ -349,6 +351,8 @@
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/sidebar.js"></script>
         <script src="js/owl/owl.js"></script>
+
+        
         
     </body>
 
