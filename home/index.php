@@ -211,7 +211,13 @@
             
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="nav navbar-nav ml-auto">
+                <a href="" class="mr-4">
+                    <div class="ds-hover nav-item text-white pt-2 nav-link     ">
+                    Message
+                     </div>
+                </a>
                 <div id="noti_Container " class="pt-2 mr-5">
+
                     <div id="noti_Counter"></div>   <!--SHOW NOTIFICATIONS COUNT.-->
                     
                     <!--A CIRCLE LIKE BUTTON TO DISPLAY NOTIFICATION DROPDOWN.-->
@@ -223,7 +229,7 @@
                         <div style="height:300px;">
                         <div class="container">
                         <div class="col-md-5">
-                                                Lời mời kết bạn
+                                                Friend Requests
                                                 </div>
                             <div class="row m-0 pl-2">
                             
