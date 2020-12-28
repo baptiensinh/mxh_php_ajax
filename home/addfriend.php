@@ -6,8 +6,8 @@ require_once "../includes/connectdb.php";
 
 if(isset($_SESSION["id"]) && isset($_GET['id'])){
     $id = $_GET['id'];
-    $sql_insert = "INSERT INTO relationships (user1,user2, friend_stt,user_invite) VALUES
-        ('" . $_SESSION["id"] . "','" . $_GET["id"] . "','" . 0 . "','" .$_SESSION["id"]. "');";
+        $sql_insert = "INSERT INTO relationships (user1,user2, friend_stt,user_invite) VALUES
+            ('" . $_SESSION["id"] . "','" . $_GET["id"] . "','" . 0 . "','" .$_SESSION["id"]. "');";
 
         $insert=mysqli_query($link, $sql_insert);
         if($insert){

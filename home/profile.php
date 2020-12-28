@@ -111,13 +111,13 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
 }
 else{
     $showpasschange = '
-                    <a href="../home/changepass.php?id=' . $_SESSION['id'] . '">
+                    
                     <div class="row">
                     <div class="col-md-12 ">
-                    <img class="imgfixpassword" src="images/changepw.png" alt="change password">
+                    <a class="ml-5" href="../home/addfriend.php?id=' . $id . '">Add Friend</a>
                     </div>
                     </div>
-                    </a>';
+                    ';
 
 }
 

@@ -27,7 +27,7 @@
     $rowav = mysqli_fetch_assoc($resultav);
     // $friends=get_friends($rowav["id"],$link);
     // $invites=get_invites($rowav["id"],$link);
-    $not_fr=not_friends($rowav["id"],$link);
+
     //$ivs=get_inv_sent($rowav["id"],$link);
 
     //print_r($not_fr);
@@ -39,6 +39,8 @@
         </a>
         ';
     } else {
+
+            $not_fr=not_friends($rowav["id"],$link);
             // Suggestions user
                 // kiem tra ban be hay chưa
                 $not_friends=not_friends($rowav["id"],$link);
@@ -57,33 +59,35 @@
 
                 $rand2=array(0);
                 for ($i=1;$i<8;$i++){
-                    $rand=rand(1,count($not_friends));
-                    
+                    // $rand=rand(1,count($not_friends));
+                    $t=array_rand($not_friends,1);
                     // echo "abc";
                     // print_r($rand2);
-                    if ($rand!=$_SESSION["id"]&& !in_array($rand, $rand2)){
+                    if ($t!=$_SESSION["id"]&& !in_array($t, $rand2)){
                         // echo "if";
+                        
+                        
                         $sql_fr = 'SELECT *
                             FROM users
-                            WHERE id = '.$not_friends[$rand] .';';
+                            WHERE id = '. $not_friends[$t] .';';
                         $result_fr = $link->query($sql_fr);
+                        if ($result_fr && $result_fr->num_rows > 0){
+                            $suggestions=mysqli_fetch_assoc($result_fr);
 
-                        $suggestions=mysqli_fetch_assoc($result_fr);
-
-                        $show_avatar_sugg= $show_avatar_sugg.'<div class="row m-0 pl-2">
-                        
-                            <a href="../home/profile.php?id=' . $suggestions["id"] . '">
-                                <img class="box-icon-profile float-left img-re-sug" src="../images/avatar/' . $suggestions["avatar_url"] . '" alt="" sizes="" srcset="">
-                            </a>
-                            <div class="name-re-sugg">'.$suggestions["username"].'
-                                <div class="blockquote-footer">Suggested for you</div>
-                            </div>
-                            <a class="ml-5" href="../home/addfriend.php?id=' . $suggestions["id"] . '"">Add Friend</a>
+                            $show_avatar_sugg= $show_avatar_sugg.'<div class="row m-0 pl-2">
+                            
+                                <a href="../home/profile.php?id=' . $suggestions["id"] . '">
+                                    <img class="box-icon-profile float-left img-re-sug" src="../images/avatar/' . $suggestions["avatar_url"] . '" alt="" sizes="" srcset="">
+                                </a>
+                                <div class="name-re-sugg">'.$suggestions["username"].'
+                                    <div class="blockquote-footer">Suggested for you</div>
+                                </div>
+                                <a class="ml-5" href="../home/addfriend.php?id=' . $suggestions["id"] . '"">Add Friend</a>
 
 
-                        </div> ';
-                        array_push($rand2,$rand);
-
+                            </div> ';
+                            array_push($rand2,$t);
+                        }
                     }
                 }
     //// end Suggestions user
@@ -204,16 +208,46 @@
             </div>
             </form>
             <!--TODO:END SEARCH-->
-            <!--TODO: upload image-->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="nav navbar-nav ml-auto">
+                <div id="noti_Container " class="pt-2 mr-5">
+                    <div id="noti_Counter"></div>   <!--SHOW NOTIFICATIONS COUNT.-->
+                    
+                    <!--A CIRCLE LIKE BUTTON TO DISPLAY NOTIFICATION DROPDOWN.-->
+                    <div id="noti_Button"></div>    
+
+                    <!--THE NOTIFICAIONS DROPDOWN BOX.-->
+                    <div id="notifications">
+                        <h3>Notifications</h3>
+                        <div style="height:300px;">
+                        <div class="container">
+                        <div class="col-md-5">
+                                                Lời mời kết bạn
+                                                </div>
+                            <div class="row m-0 pl-2">
+                            
+                            <a href="../home/profile.php?id=4">
+                                <img class="box-icon-profile float-left img-re-sug" src="../images/avatar/user.png" alt="" sizes="" srcset="">
+                            </a>
+                            <div class="name-re-sugg">ABD
+                                <div class="blockquote-footer">Suggested for you</div>
+                            </div>
+                            <a class="ml-5" href="../home/addfriend.php?id=4">Accept</a>
+
+
+                        </div>
+
+                        </div>
+                        </div>
+                        <div class="seeAll"><a href="#">See All</a></div>
+                    </div>
+                 </div>
                     <!-- TODO: PHP USER -->
                     <?php echo $log_reg; ?>
                 </ul>
             </div>
+           
         </nav>
         <!--TODO:Content-->
             <div class="container bg-white">
