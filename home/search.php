@@ -13,7 +13,7 @@ if (isset($_SESSION["id"]) && isset($_POST['search']) && $_POST['search']!=''){
     $result_recommend_user = $link->query($sql_show_recommend_user);
 
     // Search all description post
-    $sql_show_recommend_post = 'SELECT * FROM posts WHERE description LIKE "%' . $search . '%" AND username NOT IN 
+    $sql_show_recommend_post = 'SELECT * FROM posts WHERE description LIKE "%' . $search . '%" AND description NOT IN 
                                 (SELECT description FROM posts WHERE user_id = '.$_SESSION["id"].')';
     $result_recommend_post = $link->query($sql_show_recommend_post);
 
@@ -34,35 +34,35 @@ if (isset($_SESSION["id"]) && isset($_POST['search']) && $_POST['search']!=''){
         }
     } else
     if (mysqli_num_rows($result_recommend_post) > 0) {
-    while ($rowSearch = mysqli_fetch_assoc($result_recommend_post)) {
+        while ($rowSearch = mysqli_fetch_assoc($result_recommend_post)) {
 
-    // show information photo, post, user
-    $sql_get_photo  =  'SELECT p.description AS pdes, p.images_url AS img_url, u.username AS username, u.id AS userid
-                        FROM photos p JOIN posts_photos pp JOIN posts JOIN users u
-                        ON p.id = pp.photo_id AND pp.post_id=posts.id AND posts.user_id = u.id';
+        // show information photo, post, user
+        $sql_get_photo  =  'SELECT p.description AS pdes, p.images_url AS img_url, u.username AS username, u.id AS userid
+                            FROM photos p JOIN posts_photos pp JOIN posts JOIN users u
+                            ON p.id = pp.photo_id AND pp.post_id=posts.id AND posts.user_id = u.id';
 
-    $result_get_photo = $link->query($sql_get_photo);
-    $row_get_photo = mysqli_fetch_assoc($result_get_photo);
+        $result_get_photo = $link->query($sql_get_photo);
+        $row_get_photo = mysqli_fetch_assoc($result_get_photo);
 
-    $show_content = $show_content . 
-            '<tr>
-                <td>
-                    <a class="lightbox" href="../home/newsfeed.php?id=' . $rowSearch["id"] . '">
-                        <img class="img-fluid image scale-on-hover box-profile" style=" width:150px;height:100px;" src="../images/' . $row_get_photo["img_url"] . '">
-                    </a>
-                </td>
-                <td>
-                    <a class="lightbox" href="../home/profile.php?id=' . $row_get_photo["userid"] . '"> <h5>' . $row_get_photo["username"] . '</h5></a>
-                    <h6>Post Description: <a class="lightbox" href="../home/newsfeed.php?id=' . $rowSearch["id"] . '"> ' . $rowSearch["description"] . '</h6></a>
-                    <p> Photo Description: ' . $row_get_photo["pdes"] . '</p>
-                </td>
-            </tr>';
+        $show_content = $show_content . 
+                '<tr>
+                    <td>
+                        <a class="lightbox" href="../home/newsfeed.php?id=' . $rowSearch["id"] . '">
+                            <img class="img-fluid image scale-on-hover box-profile" style=" width:150px;height:100px;" src="../images/' . $row_get_photo["img_url"] . '">
+                        </a>
+                    </td>
+                    <td>
+                        <a class="lightbox" href="../home/profile.php?id=' . $row_get_photo["userid"] . '"> <h5>' . $row_get_photo["username"] . '</h5></a>
+                        <h6>Post Description: <a class="lightbox" href="../home/newsfeed.php?id=' . $rowSearch["id"] . '"> ' . $rowSearch["description"] . '</h6></a>
+                        <p> Photo Description: ' . $row_get_photo["pdes"] . '</p>
+                    </td>
+                </tr>';
         }
     } 
     else {
     $show_content = '<h2 class="text-black pt-5">No result for: ' . $search.'</h2>';
     }
-    
+
 }
 
 ?>
@@ -94,30 +94,29 @@ if (isset($_SESSION["id"]) && isset($_POST['search']) && $_POST['search']!=''){
     <!--TODO: This navigation-->
     <nav class="nava navbar navbar-expand-lg fixed-top fix-z-1">
 
-<a class="navbar-brand ds-hover nav-link" href="../home/">
-    <img src="images/7.png" width="120" height="auto" alt="logo">
-</a>
-<!--TODO:SEARCH-->
-<form action="search.php" class="searchcss" method="POST">
-    <div class="input-group mb-3 ">
-         <div class="input-group-prepend">
-             <button class="input-group-text" id="search">Search</button>
-         </div>
-         
-      <input class="form-control" type="search" name="search" id="search" placeholder="...">
-    </div>
-</form>
-<!--TODO:END SEARCH-->
-<!--TODO: upload image-->
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-</button>
-<div class="collapse navbar-collapse" id="navbarResponsive">
-    <ul class="nav navbar-nav ml-auto">
-        <!-- TODO: PHP USER -->
-        <?php echo $log_reg; ?>
-    </ul>
-</div>
+        <a class="navbar-brand ds-hover nav-link" href="../home/">
+            <img src="images/7.png" width="120" height="auto" alt="logo">
+        </a>
+        <!--TODO:SEARCH-->
+        <form action="search.php" class="searchcss" method="POST">
+            <div class="input-group mb-3 ">
+                <div class="input-group-prepend">
+                    <button class="input-group-text" id="search">Search</button>
+                </div>
+                
+            <input class="form-control" type="search" name="search" id="search" placeholder="...">
+            </div>
+        </form>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="nav navbar-nav ml-auto">
+                <!-- TODO: PHP USER -->
+                <?php echo $log_reg; ?>
+            </ul>
+        </div>
 </nav>
     <!--TODO:This Header-->
     <header>
@@ -151,12 +150,6 @@ if (isset($_SESSION["id"]) && isset($_POST['search']) && $_POST['search']!=''){
     </script>
     <!--TODO:test load <div id="LoadNewsFeed"></div> -->
 
-    <!--TODO: That's button upload-->
-    <a href="upload.php">
-        <div class="ds-upload position-fixed">
-            <button class="" id="login" type=""> <img src="images/photo.png" alt="" srcset=""> Upload</button>
-        </div>
-    </a>
     <!--JS-->
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/popper.min.js"></script>
