@@ -110,8 +110,8 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
     </div>';
 }
 else{
+    
     $showpasschange = '
-                    
                     <div class="row">
                     <div class="col-md-12 ">
                     <a class="ml-5" href="../home/addfriend.php?id=' . $id . '">Add Friend</a>

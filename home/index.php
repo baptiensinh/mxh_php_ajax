@@ -211,46 +211,8 @@
             
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="nav navbar-nav ml-auto">
-                <a href="" class="mr-4">
-                    <div class="ds-hover nav-item text-white pt-2 nav-link     ">
-                    Message
-                     </div>
-                </a>
-                <div id="noti_Container " class="pt-2 mr-5">
-
-                    <div id="noti_Counter"></div>   <!--SHOW NOTIFICATIONS COUNT.-->
-                    
-                    <!--A CIRCLE LIKE BUTTON TO DISPLAY NOTIFICATION DROPDOWN.-->
-                    <div id="noti_Button"></div>    
-
-                    <!--THE NOTIFICAIONS DROPDOWN BOX.-->
-                    <div id="notifications">
-                        <h3>Notifications</h3>
-                        <div style="height:300px;">
-                        <div class="container">
-                        <div class="col-md-5">
-                                                Friend Requests
-                                                </div>
-                            <div class="row m-0 pl-2">
-                            
-                            <a href="../home/profile.php?id=4">
-                                <img class="box-icon-profile float-left img-re-sug" src="../images/avatar/user.png" alt="" sizes="" srcset="">
-                            </a>
-                            <div class="name-re-sugg">ABD
-                                <div class="blockquote-footer">Suggested for you</div>
-                            </div>
-                            <a class="ml-5" href="../home/addfriend.php?id=4">Accept</a>
-
-
-                        </div>
-
-                        </div>
-                        </div>
-                        <div class="seeAll"><a href="#">See All</a></div>
-                    </div>
-                 </div>
                     <!-- TODO: PHP USER -->
-                    <?php echo $log_reg; ?>
+                   <?php echo $log_reg; ?>
                 </ul>
             </div>
            
@@ -264,7 +226,8 @@
                         <div class="col-md-8">  
                             <div class="row mr-3" >
                                 <div class="form-group col-lg-12 border border-info p-2">
-                                    <input class="form-control input-lg " id="inputlg" placeholder="Bạn đang nghĩ gì? ..."  type="text">
+                                    <input class="form-control input-lg " id="inputlg" placeholder="What's on your mind, ...
+"  type="text">
                                     <hr>
                                     <a href="upload.php">
                                         <button class="btn btn-primary btn mx-2">Ảnh</button>
@@ -294,7 +257,7 @@
                                                  <!-- Suggestions -->
                                              <div class="row">
                                                 <div class="col-md-5">
-                                                Suggestions For You
+                                                People You May Know
                                                 </div>
                                                 <div class="col-md-2">
                                                     <a class="float-right" href="">See all</a>

@@ -4,58 +4,65 @@ require_once "../includes/connectdb.php";
 $search = $_POST['search'];
 $show_content = '<table>';
 
-// Search username
-$sql_show_recommend_user = 'SELECT * FROM users WHERE username LIKE "' . $search . '%" OR email LIKE "' . $search . '%"';
-$result_recommend_user = $link->query($sql_show_recommend_user);
 
-// Search description post
-$sql_show_recommend_post = 'SELECT * FROM posts WHERE description LIKE "%' . $search . '%"';
-$result_recommend_post = $link->query($sql_show_recommend_post);
+if (isset($_SESSION["id"]) && isset($_POST['search']) && $_POST['search']!=''){
+    // Search all username
+    $sql_show_recommend_user = 'SELECT * FROM users 
+                                WHERE (username LIKE "' . $search . '%" OR email LIKE "' . $search . '%") AND username NOT IN 
+                                (SELECT username FROM users WHERE id = '.$_SESSION["id"].')';
+    $result_recommend_user = $link->query($sql_show_recommend_user);
 
+    // Search all description post
+    $sql_show_recommend_post = 'SELECT * FROM posts WHERE description LIKE "%' . $search . '%" AND username NOT IN 
+                                (SELECT description FROM posts WHERE user_id = '.$_SESSION["id"].')';
+    $result_recommend_post = $link->query($sql_show_recommend_post);
 
-if (mysqli_num_rows($result_recommend_user) > 0) {
+    // show result search user
+    if (mysqli_num_rows($result_recommend_user) > 0) {
     while ($rowSearch = mysqli_fetch_assoc($result_recommend_user)) {
-            $show_content = $show_content . 
-               '<tr>
-                    <td>
-                        <a class="lightbox" href="../home/profile.php?id=' . $rowSearch["id"] . '">
-                            <img class="img-fluid image scale-on-hover box-profile" style=" width:150px;height:100px;" src="../images/' . $rowSearch["avatar_url"] . '">
-                        </a>
-                    </td>
-                    <td>
-                        <h5><a class="lightbox" href="../home/profile.php?id=' . $rowSearch["id"] . '"> ' . $rowSearch["username"] . '</a></h5>
-                    </td>
-                </tr>';
-    }
-} else
-if (mysqli_num_rows($result_recommend_post) > 0) {
+    $show_content = $show_content . 
+            '<tr>
+                <td>
+                    <a class="lightbox" href="../home/profile.php?id=' . $rowSearch["id"] . '">
+                        <img class="img-fluid image scale-on-hover box-profile" style=" width:120px;height:120px;" src="../images/avatar/' . $rowSearch["avatar_url"] . '">
+                    </a>
+                </td>
+                <td>
+                    <h5><a class="lightbox" href="../home/profile.php?id=' . $rowSearch["id"] . '"> ' . $rowSearch["username"] . '</a></h5>
+                </td>
+            </tr>';
+        }
+    } else
+    if (mysqli_num_rows($result_recommend_post) > 0) {
     while ($rowSearch = mysqli_fetch_assoc($result_recommend_post)) {
 
-        // Get information photo, post, user
-        $sql_get_photo  =  'SELECT p.description AS pdes, p.images_url AS img_url, u.username AS username, u.id AS id
-                            FROM photos p JOIN posts_photos pp JOIN posts JOIN users u
-                            ON p.id = pp.photo_id AND pp.post_id=posts.id AND posts.user_id = u.id';
+    // show information photo, post, user
+    $sql_get_photo  =  'SELECT p.description AS pdes, p.images_url AS img_url, u.username AS username, u.id AS userid
+                        FROM photos p JOIN posts_photos pp JOIN posts JOIN users u
+                        ON p.id = pp.photo_id AND pp.post_id=posts.id AND posts.user_id = u.id';
 
-        $result_get_photo = $link->query($sql_get_photo);
-        $row_get_photo = mysqli_fetch_assoc($result_get_photo);
+    $result_get_photo = $link->query($sql_get_photo);
+    $row_get_photo = mysqli_fetch_assoc($result_get_photo);
 
-            $show_content = $show_content . 
-               '<tr>
-                    <td>
-                        <a class="lightbox" href="../home/newsfeed.php?id=' . $rowSearch["id"] . '">
-                            <img class="img-fluid image scale-on-hover box-profile" style=" width:150px;height:100px;" src="../images/' . $row_get_photo["img_url"] . '">
-                        </a>
-                    </td>
-                    <td>
-                        <a class="lightbox" href="../home/profile.php?id=' . $sql_get_photo["id"] . '"> <h5>' . $row_get_photo["username"] . '</h5></a>
-                        <h6>Post Description: <a class="lightbox" href="../home/newsfeed.php?id=' . $rowSearch["id"] . '"> ' . $rowSearch["description"] . '</h6></a>
-                        <p> Photo Description: ' . $row_get_photo["pdes"] . '</p>
-                    </td>
-                </tr>';
-    }
-} 
-else {
+    $show_content = $show_content . 
+            '<tr>
+                <td>
+                    <a class="lightbox" href="../home/newsfeed.php?id=' . $rowSearch["id"] . '">
+                        <img class="img-fluid image scale-on-hover box-profile" style=" width:150px;height:100px;" src="../images/' . $row_get_photo["img_url"] . '">
+                    </a>
+                </td>
+                <td>
+                    <a class="lightbox" href="../home/profile.php?id=' . $row_get_photo["userid"] . '"> <h5>' . $row_get_photo["username"] . '</h5></a>
+                    <h6>Post Description: <a class="lightbox" href="../home/newsfeed.php?id=' . $rowSearch["id"] . '"> ' . $rowSearch["description"] . '</h6></a>
+                    <p> Photo Description: ' . $row_get_photo["pdes"] . '</p>
+                </td>
+            </tr>';
+        }
+    } 
+    else {
     $show_content = '<h2 class="text-black pt-5">No result for: ' . $search.'</h2>';
+    }
+    
 }
 
 ?>
@@ -67,7 +74,7 @@ else {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>BlueSky - <?php echo $search;?></title>
+    <title>BlueSky - Search<?php ?></title>
     <link rel="stylesheet" href="css/owl/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link href="css/simple-sidebar.css" rel="stylesheet">
