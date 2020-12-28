@@ -2,6 +2,30 @@
 
 
 $(document).ready(function () {
+    $("#btt_friend").click(function(){ 
+        var t=$(this).val();
+        $.get("friend.php",{id:t}, function(data){
+            $("#showif").html(data);
+        });
+    });
+    $("#btt_photos").click(function(){ 
+        var t=$(this).val();
+        $.get("photo.php",{id:t}, function(data){
+            $("#showif").html(data);
+        });
+    });
+    $("#btt_posts").click(function(){ 
+        var t=$(this).val();
+        $.get("post.php",{id:t}, function(data){
+            $("#showif").html(data);
+        });
+    });
+
+
+
+
+
+
 
     // ANIMATEDLY DISPLAY THE NOTIFICATION COUNTER.
     $('#noti_Counter')
@@ -41,3 +65,4 @@ $(document).ready(function () {
     //     return false;       // DO NOTHING WHEN CONTAINER IS CLICKED.
     // });
 });
+

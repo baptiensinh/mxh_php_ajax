@@ -478,6 +478,11 @@ output{
     position:relative;
 }
 
+.noti{
+    width: 35px;
+    height: 35px;
+}
+
 /* A CIRCLE LIKE BUTTON IN THE TOP MENU. */
 #noti_Button {
     width:30px;
@@ -504,7 +509,7 @@ output{
     border-radius:2px;
     -moz-border-radius:2px; 
     -webkit-border-radius:2px;
-    z-index:1;
+    z-index:2;
 }
 
 /* THE NOTIFICAIONS WINDOW. THIS REMAINS HIDDEN WHEN THE PAGE LOADS. */

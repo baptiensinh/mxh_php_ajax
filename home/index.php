@@ -129,6 +129,7 @@
                             '<a href="../home/profile.php?id=' . $rowav["id"] . '">
                             <img class="box-icon-profile float-left img-re" src="../images/avatar/' . $row_get_avt["avatar_url"] . '" alt="" sizes="" srcset="">
                             </a>'
+                            
                         .'
                         <div class="name-re-content">
                         <a  href="profile.php?id=' . $row_getid["id"] . '">

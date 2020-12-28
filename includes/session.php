@@ -21,7 +21,7 @@ if (isset($_SESSION["username"])) {
                     <div id="noti_Counter"></div>   <!--SHOW NOTIFICATIONS COUNT.-->
                     
                     <!--A CIRCLE LIKE BUTTON TO DISPLAY NOTIFICATION DROPDOWN.-->
-                    <div id="noti_Button"><img src="/images/notification.png" alt=""></div>    
+                    <div id="noti_Button"><img class="noti" src="images/notification.png" alt=""></div>    
 
                     <!--THE NOTIFICAIONS DROPDOWN BOX.-->
                     <div id="notifications">

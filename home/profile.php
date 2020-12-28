@@ -283,13 +283,14 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
         <hr>
             <section class="">
                 <div class="row">
+                     
                     <div class="col-12">
-                    <div class="row d-flex justify-content-center ">
-                        <button id="btt_photos" class="btn btn-primary btn-lg mx-2">Photos</button>
-                        <button id="btt_posts" class='btn btn-primary btn-lg mx-2'>Posts</button>
-                        <button id="btt_friend" class='btn btn-primary btn-lg mx-2'>Friends</button>
+                    <div class=" d-flex justify-content-center ">
+                        <button id="btt_photos" value="<?php echo $id; ?>" class="btn btn-primary btn-lg mx-2">Photos</button>
+                        <button id="btt_posts" value="<?php echo $id; ?>" class='btn btn-primary btn-lg mx-2'>Posts</button>
+                        <button id="btt_friend" value="<?php echo $id; ?>" class='btn btn-primary btn-lg mx-2'>Friends</button>
                     </div>
-                        <div class="row">
+                        <div class="row" id="showif">
                             <?php
                             echo $uploadbtt;
                             echo $showphotoid;
@@ -307,8 +308,6 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
     <script src="js/popper.min.js"></script>
     <script src="js/owl/owl.carousel.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/index.js"></script>
-    <script src="js/totop.js"></script>
     <script src="js/owl/owl.js"></script>
     <div  style="text-align:center " class="fixed-bottom">
          <ul class=" list-inline">
