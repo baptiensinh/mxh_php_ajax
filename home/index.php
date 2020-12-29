@@ -70,15 +70,15 @@ else {
                 <img class="box-icon-profile float-left img-re" src="../images/avatar/' . $rowav["avatar_url"] . '" alt="" sizes="" srcset="">
             </a>';
     }
-
+    $fr=get_friends($_SESSION["id"],$link);
     $sql_show_recommend = 'SELECT * FROM posts WHERE status_post = 0 ORDER BY id DESC';
 
     $result_recommend = $link->query($sql_show_recommend);
-
-    if(!empty($result_recommend)){
+    array_push($fr,$_SESSION["id"]);
+    if(!empty($result_recommend)&&isset($fr)){
         if  (mysqli_num_rows($result_recommend) > 0) {
             while ($row_r = mysqli_fetch_assoc($result_recommend)) {
-
+                if(in_array($row_r["user_id"],$fr)){
                 $sql_get_info       = 'SELECT * FROM users WHERE id = ' . $row_r["user_id"] . '';;
                 $result_get_info    = $link->query($sql_get_info);
                 $row_get_info       = mysqli_fetch_assoc($result_get_info);
@@ -99,8 +99,9 @@ else {
                                 </div>
                             </div>';
                             
-                            if  (mysqli_num_rows($result_get_photo) > 0) {
+                            if  ( mysqli_num_rows($result_get_photo) > 0) {
                                 while ($row_img = mysqli_fetch_assoc($result_get_photo)) {
+                                    
                                     $show_content = $show_content .'
                                     <a class="lightbox" href="newsfeed.php?id=' . $row_img["photo_id"] . '" align="center">
                                     <img class="img-fluid image scale-on-hover box-profile" style="width:500px; height:350px" src="../images/'.$row_img["img_url"].'">
@@ -131,7 +132,7 @@ else {
                     </div>          
                 ';
             }
-            }
+        }}
         }
     }
 }
