@@ -10,11 +10,12 @@ $extension = array("jpeg","jpg","png","gif");
 //print_r($_FILES["images"]);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_SESSION["username"])) {
+        $des = $_POST['des'];
         $id_username = $_SESSION["id"];
         //$images_description = $_POST['images_description'];
         // TODO: for image upload
         //echo $_FILES["images"]["tmp_name"];
-        $sql_ipost = 'INSERT INTO posts(user_id, description) VALUES ("'.$id_username.'","")';
+        $sql_ipost = 'INSERT INTO posts(user_id, description) VALUES ("'.$id_username.'","'.$des.'")';
         $result_ipost = $link->query($sql_ipost);
 
         foreach($_FILES["images"]["tmp_name"] as $key=>$tmp_name) {

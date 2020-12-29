@@ -57,6 +57,9 @@ if(!empty($result_recommend)){
                             <div class="name-re-content">
                                 <a  href="profile.php?id=' . $row_get_info["id"] . '">' . $row_get_info["username"] . '</a>
                             </div>
+                            <div class="d-flex justify-content-end"">
+                            <a class="flex-row-reverse " href="deletepost.php?id=' . $row_r["id"] . '">DELETE POST</a>
+                        </div>
                         </div>';
                         
                         if  ( mysqli_num_rows($result_get_photo) > 0) {

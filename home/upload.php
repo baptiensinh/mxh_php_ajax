@@ -68,6 +68,7 @@ require_once "../includes/session.php";
 
                     <input id='files' type='file' name="images[]" multiple/>
                 </div>
+                <input type="text" name="des" placeholder="Mô tả ..">
                 <div class="col-sm-12 col-lg-6">
                     <button class="btn btn-outline-success" type="submit">Upload</button>
                 </div>

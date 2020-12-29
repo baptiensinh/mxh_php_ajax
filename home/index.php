@@ -130,7 +130,10 @@ else {
                                 <div class="name-re-content">
                                     <a  href="profile.php?id=' . $row_get_info["id"] . '">' . $row_get_info["username"] . '</a>
                                 </div>
-                            </div>';
+                               
+                            </div>
+                            <DIV class="row m-3" >'.$row_r["description"].' </div>'
+                            ;
                             
                             if  ( mysqli_num_rows($result_get_photo) > 0) {
                                 while ($row_img = mysqli_fetch_assoc($result_get_photo)) {
@@ -251,7 +254,10 @@ else {
                     <div class="col-md-8">  
                         <div class="row mr-3" >
                             <div class="form-group col-lg-12 border border-info p-2">
-                                <input class="form-control input-lg " id="inputlg" placeholder="What's on your mind, ..."  type="text">
+                            <form action="post_ar.php" method="post">
+                                <input class="form-control input-lg " id="inputlg" name="des" placeholder="What's on your mind, ..."  type="text">
+                                <button class="btn btn-primary btn mx-2 mt-1" type="submit">POST</button>
+                         </form>
                                 <hr>
                                 <a href="upload.php">
                                     <button class="btn btn-primary btn mx-2">Ảnh</button>
@@ -259,6 +265,7 @@ else {
                                 <a href="uploadvideo.php">
                                     <button class="btn btn-primary btn mx-2">Video</button>
                                 </a>
+
                             </div>
                         </div> 
                         <div>
