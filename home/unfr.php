@@ -22,7 +22,10 @@ if(isset($_SESSION["id"]) && isset($_GET['id'])){
         else{
 
         echo '<script language="javascript">';
-        echo 'alert("Lời mời chưa được đồng ý hoặc các bạn đã là bạn bè");';
+        echo 'alert("ERR");';
+        echo '</script>';
+        echo '<script language="javascript">';
+        echo 'window.location.href = "../home/profile.php?id=' . $_SESSION["id"] . '"';
         echo '</script>';
     }
 

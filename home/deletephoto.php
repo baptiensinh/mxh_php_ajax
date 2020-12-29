@@ -1,5 +1,6 @@
 <?php
 require_once "../includes/connectdb.php";
+
 session_start();
 //TODO: get id image need delete
 $id = $_GET["idd"];
@@ -44,3 +45,5 @@ if (mysqli_num_rows($result_showusername) > 0) {
    </script>';
 }
 echo $show;
+?>
+<script src="js/owl/owl.js"></script>

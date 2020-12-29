@@ -21,9 +21,12 @@
             }
             else{
     
-            echo '<script language="javascript">';
-            echo 'alert("Lời mời chưa được đồng ý hoặc các bạn đã là bạn bè");';
-            echo '</script>';
+                echo '<script language="javascript">';
+                echo 'alert("Lời mời chưa được đồng ý hoặc các bạn đã là bạn bè");';
+                echo '</script>';
+                echo '<script language="javascript">';
+                echo 'window.location.href = "../home"';
+                echo '</script>';
         }
     
     
