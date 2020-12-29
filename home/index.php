@@ -136,7 +136,7 @@ else {
                                 while ($row_img = mysqli_fetch_assoc($result_get_photo)) {
                                     
                                     $show_content = $show_content .'
-                                    <a class="lightbox" href="newsfeed.php?id=' . $row_img["photo_id"] . '" align="center">
+                                    <a class="lightbox" href="newsfeed.php?id=' . $row_r["id"] . '" align="center">
                                     <img class="img-fluid image scale-on-hover box-profile" style="width:500px; height:350px" src="../images/'.$row_img["img_url"].'">
                                     </a>';
                                     }
@@ -149,7 +149,7 @@ else {
                                 </div>
                                 <p id="likes">'.likess($row_r["id"],$link).' likes</p>
                                 <hr>
-                                <div class="comment-css">';
+                                <div class="comment-css overflow-auto">';
 
                             $sql_get_cmt = 'SELECT * FROM comments c JOIN users u ON c.user_id = u.id WHERE post_id = '.$row_r["id"].'';
                             $result_get_cmt = $link->query($sql_get_cmt);
@@ -173,17 +173,18 @@ else {
 
                                 $show_content = $show_content .'
                                     <hr>
+                                    </div>
                                     <form action="comment.php?id='.$row_r["id"].'" class="comment-form" method="POST">
                                         
                                         <div class="input-group mb-3">
                                             <input type="text" class="form-control cmt" name="cmt" placeholder="Add a Comment ..." aria-label="Comment" aria-describedby="basic-addon2">
                                             <div class="input-group-append">
-                                                <button type="submit">OK</button>
+                                                <button class="btn-success" type="submit">OK</button>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
-                            </div>
+                            
                         </div>
                     </div>          
                 ';

@@ -4,7 +4,41 @@ require_once "../includes/connectdb.php";
 
 
 $userpost="";
+$post_id=$_GET["id"];
 if (isset($_GET["id"])) {
+    function likess($l,$link){
+        $countl=0;
+        $sql_insert = "SELECT * from icons
+         WHERE  post_id=".$l. ";";
+         $insert=mysqli_query($link, $sql_insert);
+         if(mysqli_num_rows($insert) > 0){
+            while($row=mysqli_fetch_assoc($insert)){
+                if($row["type_icon"]==1){
+               $countl++;
+            }
+            }
+         }
+        
+         return $countl;
+        }
+        function mylikes($l,$link){
+            $countl="";
+            $sql_insert = "SELECT * from icons
+             WHERE  post_id=".$l. ";";
+             $insert=mysqli_query($link, $sql_insert);
+             if(mysqli_num_rows($insert) > 0){
+                while($row=mysqli_fetch_assoc($insert)){
+                if(($row["user_id"]==$_SESSION["id"]) && ($row["type_icon"]==1) ){
+                    $countl="btn-primary";
+                }
+                }
+             }
+             return $countl;
+            }
+        
+            $show_avatar_sugg="";
+            $username_sugg="";
+            $show_content = '';
     $id_get = $_GET["id"];
     //src="images/Images/014.jpg"
     //TODO: code redrict
@@ -76,92 +110,75 @@ if (isset($_GET["id"])) {
 // }
 
 //TODO: show images recommend
+$show_content=";";
+$show_content = $show_content .'
+<div class="comment-css overflow-auto">';
 
-// TODO: get last id> SELECT id FROM tablename ORDER BY id DESC LIMIT 1
-$sql_lastid = 'SELECT id FROM photos ORDER BY id DESC LIMIT 1';
-$result_lastid = $link->query($sql_lastid);
-$row_lastid = mysqli_fetch_assoc($result_lastid);
-$show_recommend = '';
-if ((int)$row_lastid["id"] > 10) {
-    $start_id = $row_lastid["id"] - 15;
-    $end_id = $row_lastid["id"] - 1;
-    $sql_show_recommend = 'SELECT * FROM photos 
-                    WHERE id between ' . $start_id . ' and ' . $end_id . ' ORDER BY id DESC';
-    //$show_recommend = $sql_show_recommend;   
-    $result_recommend = $link->query($sql_show_recommend);
-    //$show_recommend = $result_recommend;
-    if (mysqli_num_rows($result_recommend) > 0) {
-        while ($row_r = mysqli_fetch_assoc($result_recommend)) {
+  $sql_get_cmt = 'SELECT * FROM comments c JOIN users u ON c.user_id = u.id WHERE post_id = '.$post_id.'';
+  $result_get_cmt = $link->query($sql_get_cmt);
+      if (mysqli_num_rows($result_get_cmt) > 0){
+          while ($row_cmt = mysqli_fetch_assoc($result_get_cmt))
+          {
+              $show_content = $show_content .' <div class="card-body">
+              <div id="btnlike" >
+              <button class="bttlike '.mylikes($post_id,$link).' btn btn-outline-secondary" id="'.$post_id.'" >Like</button>
+              </div>
+              <p id="likes">'.likess($post_id,$link).' likes</p>
+              <hr>
+              <div class="card-body" >
+              <a href="../home/profile.php?id=' . $row_cmt["user_id"] . '">
+              <img class="box-icon-profile float-left img-re" style="width: 40px; height: 40px;" src="../images/avatar/' . $row_cmt["avatar_url"] . '" alt="" sizes="" srcset="">
+              </a>
+              <div class="name-re-content" style="margin-left: 15px">
+                  <a  href="profile.php?id=' . $row_cmt["user_id"] . '">' . $row_cmt["username"] . '</a>
+              </div>
+              </div>
+              <div style="margin-left: 60px">
+                  <p>'.$row_cmt["content_cmt"].'</p> 
+              </div>';
+          }
+      }
+
+      $show_content = $show_content .'
+          <hr>
+          </div>
+          <form action="comment.php?id='.$post_id.'" class="comment-form" method="POST">
+              
+              <div class="input-group mb-3">
+                  <input type="text" class="form-control cmt" name="cmt" placeholder="Add a Comment ..." aria-label="Comment" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                      <button class="btn-success" type="submit">OK</button>
+                  </div>
+              </div>
+          </form>
+        ';
+
+
             //TODO: SELECT * FROM users WHERE id=(SELECT user_id FROM photos WHERE id= 1)
-            $sql_getid = 'SELECT * FROM users WHERE id=(SELECT user_id FROM photos WHERE id= ' . $row_r["id"] . ') ';
-            $result_getid = $link->query($sql_getid);
-            $row_getid = mysqli_fetch_assoc($result_getid);
-            if ($row_r["status_photo"] == 2) { } else {
-                $show_recommend = $show_recommend . '
-                    <div class="row ds-box">
-                        <div class="col-md-5 col-sm-12 dropdown">
-                            <a href="../home/newsfeed.php?id=' . $row_r["id"] . '">
-                                <img class="ds-thum" src="../images/' . $row_r["images_url"] . '" alt="" srcset="">
-                            <div class="dropdown-content">
-                                <img class="ds-thum-ho" src="../images/' . $row_r["images_url"] . '" alt="Cinque Terre">
-                                <div class="desc">' . $row_r["description"] . '</div>
-                            </div>
-                        </div>
-                        <div class="col-md-7 col-sm-12">
-                            <div class="d-flex text-right">' . $row_r["description"] . '</div>
-                            </a>
-                            <a href="../home/profile.php?id=' . $row_getid["id"] . '">
-                                <div class="d-flex text-right">By ' . $row_getid["username"] . '</div>
-                            </a>
-                            
-                            <div class="d-flex text-right">' . mt_rand(150, 999) . ' Views</div>
-                        </div>
-                    </div>   
-                    <div class="d-flex p-2"></div> 
-                    ';
-            }
-        }
-    }
-} else {
-    //TODO: viet cho lastid < 10
-    $start_id = 1;
-    $end_id = $row_lastid["id"] - 1;
-    $sql_show_recommend = 'SELECT * FROM photos 
-                    WHERE id between ' . $start_id . ' and ' . $end_id . ' ORDER BY id DESC';
-    //$show_recommend = $sql_show_recommend;   
-    $result_recommend = $link->query($sql_show_recommend);
-    //$show_recommend = $result_recommend;
-    if (mysqli_num_rows($result_recommend) > 0) {
-        while ($row_r = mysqli_fetch_assoc($result_recommend)) {
-            //TODO: SELECT * FROM users WHERE id=(SELECT user_id FROM photos WHERE id= 1)
-            $sql_getid = 'SELECT * FROM users WHERE id=(SELECT user_id FROM photos WHERE id= ' . $row_r["id"] . ') ';
-            $result_getid = $link->query($sql_getid);
-            $row_getid = mysqli_fetch_assoc($result_getid);
+            $show_recommend="";
+            $sql_get_photo = 'SELECT p.images_url AS img_url, p.id AS photo_id FROM photos p JOIN posts_photos pp ON p.id=pp.photo_id WHERE pp.post_id = '.$post_id.' AND status_photo = 1';
+            $result_get_photo   = $link->query($sql_get_photo);
+            if( mysqli_num_rows($result_get_photo) > 0) {
+                while ($row_img = mysqli_fetch_assoc($result_get_photo)) {
             $show_recommend = $show_recommend . '  
                 <div class="row ds-box">
                     <div class="col-md-5 col-sm-12 dropdown">
-                        <a href="../home/newsfeed.php?id=' . $row_r["id"] . '">
-                            <img class="ds-thum" src="../images/' . $row_r["images_url"] . '" alt="" srcset="">
+                        <a href="../home/newsfeed.php?id=' . $post_id . '">
+                            <img class="ds-thum" src="../images/' . $row_img["img_url"] . '" alt="" srcset="">
                         <div class="dropdown-content">
-                            <img class="ds-thum-ho" src="../images/' . $row_r["images_url"] . '" alt="Cinque Terre">
-                            <div class="desc">' . $row_r["title"] . '</div>
+                            <img class="ds-thum-ho" src="../images/' . $row_img["img_url"] . '" alt="Cinque Terre">
                         </div>
                     </div>
                     <div class="col-md-7 col-sm-12">
-                        <div class="d-flex text-right">' . $row_r["title"] . '</div>
                         </a>
-                        <a href="../home/profile.php?id=' . $row_getid["id"] . '">
-                            <div class="d-flex text-right">By ' . $row_getid["username"] . '</div>
-                        </a>
-                        
-                        <div class="d-flex text-right">' . mt_rand(150, 999) . ' Views</div>
                     </div>
                 </div>   
                 <div class="d-flex p-2"></div> 
                 ';
-        }
-    }
-}
+                }
+            }
+        
+
 
 
 // $sql_recommend = 'SELECT * FROM photos';
@@ -257,7 +274,7 @@ $link->close();
                 </div>
                 <div class="col-md-4 col-sm-12">
                     <!--TODO: reconned-->
-                    <h4 class="text-white text-center">Recommend for you</h4>
+
                     <div class="d-flex p-2"></div>
                             <div class="col=md-4">
                                 <div class="row">
@@ -276,7 +293,7 @@ $link->close();
                                 <div class="row">
                                             <!-- <img class="box-icon-profile float-left img-re" src="images/user.jpg" alt="" sizes="" srcset=""> -->
                                             <?php
-                                                echo $show_avatar;
+                                                echo $show_content;
                                             ?>
                                 </div>
                             </div>
@@ -288,7 +305,7 @@ $link->close();
             <div class="row">
             <?php
                     echo $show_recommend;
-                    ?>
+            ?>
         </div>
     </div>
     <!--TODO: This view more-->
@@ -314,11 +331,7 @@ $link->close();
     </div>
     <!--TODO: This share-->
 
-    <a href="upload.php">
-        <div class="ds-upload position-fixed">
-            <button class="" id="login" type=""> Upload</button>
-        </div>
-    </a>
+
 
     </div>
 

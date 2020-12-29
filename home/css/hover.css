@@ -554,3 +554,7 @@ output{
     color:#3b5998;
     text-decoration:underline;
 }
+.comment-css{
+        height:150px;
+        overflow-y: scroll;
+}
