@@ -42,7 +42,7 @@ if(!empty($result_showphotoid)){
                         </a>
                         <div class="card-body">           
                             <div class="text-center">
-                                <button class="btndelete btn" id="'.$row_showphotoid["id"].'">DELETE</button>
+                                <button class="btndelete" id="'.$row_showphotoid["id"].'">DELETE</button>
                                 <a href="post.php?id=' . $row_showphotoid["id"] . '">
                                     <button type="button" value="<?php echo $id; ?>" class="btn ">POST</button>
                                 </a>

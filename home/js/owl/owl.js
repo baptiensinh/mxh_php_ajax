@@ -17,10 +17,10 @@ $(document).ready(function () {
             $("#showif").html(data);
         });
     });
-    $("#btndelete").click(function(){ 
-        var t=$(this.id);
-        console.log("delete");
-        $.get("deletephoto.php",{id:t}, function(data){
+    $(".btndelete").click(function(){ 
+        var t=this.id;
+        console.log(t);
+        $.get("deletephoto.php",{idd:t}, function(data){
             console.log(data);
             $("#scr").html(data);
         });

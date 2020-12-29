@@ -2,10 +2,10 @@
 require_once "../includes/connectdb.php";
 session_start();
 //TODO: get id image need delete
-$id = $_GET["id"];
+$id = $_GET["idd"];
 $delete = 2;
 //TODO: show user name
-$sql_showusername = 'SELECT * FROM users WHERE id=(SELECT id_user FROM photos WHERE id=' . $id . ')';
+$sql_showusername = 'SELECT * FROM users WHERE id=(SELECT user_id FROM photos WHERE id=' . $id . ')';
 $result_showusername = $link->query($sql_showusername);
 $showusername = '';
 $show="";
