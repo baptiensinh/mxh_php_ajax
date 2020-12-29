@@ -101,12 +101,17 @@ if (isset($_GET['id'])){
                        WHERE t_user = ".$_SESSION["id"]." AND f_user = ".$userid."" ;
     $result_get_fr_msg = $link->query($sql_get_fr_msg);
 
+    $sql_get_avt = "SELECT avatar_url AS avt 
+                    FROM users WHERE id = ".$userid." ";
+    $result_get_avt = $link->query($sql_get_avt);
+    $get_avt = mysqli_fetch_assoc($result_get_avt);
+
     if (mysqli_num_rows($result_get_fr_msg) > 0) {
         while ($row_msg = mysqli_fetch_assoc($result_get_fr_msg)) {
             $show_msg = $show_msg.
             '<div class="d-flex justify-content-start mb-4">
             <div class="img_cont_msg">
-                <img src="../images/'.$row_msg["avt"].'" class="rounded-circle user_img_msg">
+                <img src="../images/avatar/'.$get_avt["avt"].'" class="rounded-circle user_img_msg">
             </div>
             <div class="msg_cotainer">
                 '.$row_msg['msg'].'
@@ -132,7 +137,7 @@ if (isset($_GET['id'])){
                     <span class="msg_time_send">'.$row_msg["create_time"].'</span>
                 </div>
                 <div class="img_cont_msg">
-                    <img src="../images/'.$row_msg["avt"].'" class="rounded-circle user_img_msg">
+                    <img src="../images/avatar/'.$row_msg["avt"].'" class="rounded-circle user_img_msg">
                 </div>
             </div>
             ';

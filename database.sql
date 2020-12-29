@@ -23,10 +23,6 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `admins`
---
-
 -- Table structure for table `admin`
 
 CREATE TABLE `admin` (
@@ -57,15 +53,15 @@ CREATE TABLE `users` (
 -- status_user = 1 ---> chặn đăng bài
 
 -- INSERT INTO `users` (`id`, `username`, `email`, `pass`, `status_user`, `avatar_url`) VALUES
--- (1, 'admin', 'admin1@admin.com', '1', 0, '1559652895.jpg'),
--- (2, 'admin 2', 'admin2@admin.com', '1', 0, NULL),
--- (3, 'admin 3', 'admin3@admin.com', '1', 0, NULL),
--- (4, 'admin 4', 'admin4@admin.com', '1', 0, NULL),
--- (5, 'admin 5', 'admin5@admin.com', '1', 0, NULL),
--- (6, 'admin 6', 'admin6@admin.com', '1', 0, NULL),
--- (7, 'admin 7', 'admin7@admin.com', '1', 0, NULL),
--- (8, 'admin 8', 'admin8@admin.com', '1', 0, NULL),
--- (9, 'userTest', 'userTest@admin.com', '1', 1, '1560440712.jpg')
+-- (1, 'user 1', 'user1@gmail.com', '1', 0, '1559652895.jpg'),
+-- (2, 'user 2', 'user2@gmail.com', '1', 0, '1560440712.jpg'),
+-- (3, 'user 3', 'user3@gmail.com', '1', 0, '1608633680.jpg'),
+-- (4, 'user 4', 'user4@gmail.com', '1', 0, '1608690836.jpg'),
+-- (5, 'user 5', 'user5@gmail.com', '1', 0, '1608868387.jpg'),
+-- (6, 'user 6', 'user6@gmail.com', '1', 0, '1608967576.jpg'),
+-- (7, 'user 7', 'user7@gmail.com', '1', 0, '1608970166.jpg'),
+-- (8, 'user 8', 'user8@gmail.com', '1', 0, '1609150781.jpg'),
+-- (9, 'user 9', 'user9@gmail.com', '1', 1, '1560440712.jpg')
 
 
 -- Table structure for table `posts`
@@ -81,21 +77,16 @@ CREATE TABLE `photos` (
 
 -- status_photo = 0 ---> private
 -- status_photo = 1 ---> public
--- status_photo = 2 ---> ban
--- status_photo = 3 ---> video private
--- status_photo = 4 ---> video public
+-- status_photo = 2 ---> delete
 
--- INSERT INTO `posts` (`id`, `user_id`, `status_post`, `description`, `images_url`) VALUES
--- (1, 1, 1, 'mota 1 any', '1560431861.jpg'),
--- (2, 2, 0, 'ok chua', '1560433479.jpg'),
--- (3, 3, 2, 'mt 3 any', '1560433630.jpg'),
--- (4, 4, 0, 'mt 4 any', '1560433657.jpg'),
--- (5, 1, 0, 'mt 5 nay', '1560433682.jpg'),
--- (6, 5, 0, 'mt 6 any', '1560433708.jpg'),
--- (7, 2, 0, 'mt 7 any', '1560433731.jpg'),
--- (8, 3, 0, 'mt 8 any', '1560433758.jpg'),
--- (9, 6, 0, 'mt 9 any', '1560433785.jpg'),
--- (10, 3, 1, 'llll', '1560494268.jpg')
+-- INSERT INTO `photos` (`id`, `user_id`, `status_photo`, `description`, `images_url`) VALUES
+-- (1, 1, 1, 'des photo 1', '1608886704359.jpg'),
+-- (2, 2, 0, 'des photo 2', '1608886704414.jpg'),
+-- (3, 3, 2, 'des photo 3', '1608886770160.jpg'),
+-- (4, 4, 1, 'des photo 4', '1608886806493.jpg'),
+-- (5, 1, 1, 'des photo 5', '1608886806625.jpg'),
+-- (6, 5, 1, 'des photo 6', '1608886898367.jpg')
+
 
 CREATE TABLE `posts` (
   `id` int(11) PRIMARY KEY AUTO_INCREMENT,
@@ -104,6 +95,21 @@ CREATE TABLE `posts` (
   `description` varchar(500) DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- status_post=-1 ---> xóa post
+-- status_post=0 ---> bình thường
+-- status_post=1 ---> User bị chặn post
+
+-- INSERT INTO `posts` (`id`, `user_id`, `status_post`, `description`, `create_time`) VALUES
+-- (1, 1, 1, 'mota 1 any', ''),
+-- (2, 2, 0, 'ok chua', ''),
+-- (3, 3, 2, 'mt 3 any', ''),
+-- (4, 4, 0, 'mt 4 any', ''),
+-- (5, 1, 0, 'mt 5 nay', ''),
+-- (6, 5, 0, 'mt 6 any', ''),
+-- (7, 2, 0, 'mt 7 any', ''),
+-- (8, 3, 0, 'mt 8 any', ''),
+-- (9, 6, 0, 'mt 9 any', '')
 
 
 -- Table structure for table `comments`
@@ -114,7 +120,7 @@ CREATE TABLE `comments` (
   `user_id` int(11) NOT NULL,
   `content_cmt` varchar(500) NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8_unicode_ci;
 
 
 -- Table structure for table `icons`
@@ -125,7 +131,7 @@ CREATE TABLE `icons` (
   `type_icon` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
+ALTER TABLE `icons` ADD CONSTRAINT PK_icon PRIMARY KEY (post_id,user_id);
 
 -- type_icon = -1 ---> xóa
 -- type_icon = 0 ---> like
@@ -135,47 +141,62 @@ CREATE TABLE `icons` (
 -- type_icon = 4 ---> sad
 -- type_icon = 5 ---> angry 
 
-
+-- Table structure for table `relationships`
 
 CREATE TABLE `relationships` (
   `user1` int(11) NOT NULL,
   `user2` int(11) NOT NULL,
   `friend_stt` int(1) NOT NULL,
-  `user_invite` int(11) NOT NULL
+  `user_invite` int(11) NOT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
--- friend_stt = 0 --->  invite
--- friend_stt = 1 --->  accepted
--- friend_stt = 2 --->  deleted
 
+ALTER TABLE `relationships` ADD CONSTRAINT PK_Relate PRIMARY KEY (user1,user2);
 
+-- INSERT INTO `relationships` (`user1`, `user2`, `friend_stt`, `user_invite`) VALUES
+-- (1, 2, 1, 2),
+-- (1, 5, 1, 5),
+-- (1, 3, 0, 3),
+-- (3, 2, 1, 2),
+-- (4, 1, 1, 4)
+
+-- Table structure for table `posts_photos`
 
 CREATE TABLE `posts_photos` ( 
-  `id_photo` INT(11) NOT NULL ,
-  `id_post` INT(11) NOT NULL , 
+  `photo_id` INT(11) NOT NULL ,
+  `post_id` INT(11) NOT NULL , 
   `stt_group` INT(1)
   ) ENGINE = InnoDB;
 
-  CREATE TABLE chat (
-  msg_id int(11) PRIMARY KEY AUTO_INCREMENT,
-  f_user int(11) NOT NULL,
-  t_user int(11) NOT NULL,
-  f_message varchar(999) NOT NULL,
-  create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  ALTER TABLE `posts_photos` ADD CONSTRAINT PK_PP PRIMARY KEY (photo_id,post_id);
 
-ALTER TABLE chat ADD CONSTRAINT ch_ibfk_1 FOREIGN KEY (f_user) REFERENCES users (id);
-ALTER TABLE chat ADD CONSTRAINT ch_ibfk_2 FOREIGN KEY (t_user) REFERENCES users (id);
-
+-- INSERT INTO `posts_photos` (`photo_id`, `post_id`, `stt_group`) VALUES
+-- (1, 1, 1),
+-- (2, 2, 0),
+-- (3, 3, 2),
+-- (4, 4, 1),
+-- (5, 1, 1),
+-- (6, 5, 1)
 
 
+-- Table structure for table `chat`
+
+CREATE TABLE `chat` (
+  `msg_id` int(11) PRIMARY KEY AUTO_INCREMENT,
+  `f_user` int(11) NOT NULL,
+  `t_user` int(11) NOT NULL,
+  `f_message` varchar(999) NOT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8_unicode_ci;
 
 
+ALTER TABLE `chat` ADD CONSTRAINT `ch_ibfk_1` FOREIGN KEY (`f_user`) REFERENCES `users` (`id`);
+ALTER TABLE `chat` ADD CONSTRAINT `ch_ibfk_2` FOREIGN KEY (`t_user`) REFERENCES `users` (`id`);
 
-ALTER TABLE `photos` ADD CONSTRAINT `ps_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `photos` ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
-ALTER TABLE `posts_photos` ADD CONSTRAINT `group_ps_fk1` FOREIGN KEY (`id_post`) REFERENCES `posts` (`id`);
-ALTER TABLE `posts_photos` ADD CONSTRAINT `group_ps_fk2` FOREIGN KEY (`id_photo`) REFERENCES `photos` (`id`);
-
+ALTER TABLE `posts_photos` ADD CONSTRAINT `group_posts_fk1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`);
+ALTER TABLE `posts_photos` ADD CONSTRAINT `group_posts_fk2` FOREIGN KEY (`photo_id`) REFERENCES `photos` (`id`);
 
 ALTER TABLE `comments` ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 ALTER TABLE `comments` ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`);
@@ -183,12 +204,7 @@ ALTER TABLE `comments` ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`post_id`) 
 ALTER TABLE `relationships` ADD CONSTRAINT `re_ibfk_1` FOREIGN KEY (`user1`) REFERENCES `users` (`id`);
 ALTER TABLE `relationships` ADD CONSTRAINT `re_ibfk_2` FOREIGN KEY (`user2`) REFERENCES `users` (`id`);
 
-
 ALTER TABLE `icons` ADD CONSTRAINT `icons_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 ALTER TABLE `icons` ADD CONSTRAINT `icons_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`);
-
-
-ALTER TABLE `posts` ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
 
 
