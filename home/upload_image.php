@@ -4,9 +4,9 @@ require_once "../includes/connectdb.php";
 
 // print_r($_POST);
 extract($_POST);
-$error=array();
-$f="../images/";
-$extension=array("jpeg","jpg","png","gif");
+$error = array();
+$f = "../images/";
+$extension = array("jpeg","jpg","png","gif");
 //print_r($_FILES["images"]);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_SESSION["username"])) {
@@ -14,6 +14,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //$images_description = $_POST['images_description'];
         // TODO: for image upload
         //echo $_FILES["images"]["tmp_name"];
+        $sql_ipost = 'INSERT INTO posts(user_id, description) VALUES ("'.$id_username.'","")';
+        $result_ipost = $link->query($sql_ipost);
+
         foreach($_FILES["images"]["tmp_name"] as $key=>$tmp_name) {
             $file_name = $_FILES['images']['name'][$key];
             $file_tmp = $_FILES['images']['tmp_name'][$key];
@@ -33,14 +36,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
             if (move_uploaded_file($file_tmp, $f . $final_file)) {
                         //$image = $final_file;
-                        
-                        $sql = "INSERT INTO photos (user_id, status_photo, images_url) VALUES ('" . $id_username . "','0','" . $final_file . "')";
-                        mysqli_query($link, $sql);
+                        $sql_get_pid = 'SELECT id FROM posts ORDER BY id DESC LIMIT 1';
+                        $result_get_pid = $link->query($sql_get_pid);
+                        $row_get_pid = mysqli_fetch_assoc($result_get_pid);
+
+                        $sql_iphoto = 'INSERT INTO photos (user_id, status_photo, images_url) VALUES ("'. $id_username . '", "1", "' . $final_file . '")';
+                        mysqli_query($link, $sql_iphoto);
+
+                        $sql_get_iphoto = 'SELECT id FROM photos ORDER BY id DESC LIMIT 1';
+                        $result_get_iphoto = $link->query($sql_get_iphoto);
+                        $row_get_iphoto = mysqli_fetch_assoc($result_get_iphoto);
+
+                        $sql_ipp = 'INSERT INTO posts_photos (photo_id, post_id, stt_group) VALUES ("'. $row_get_iphoto["id"] . '","' . $row_get_pid["id"] . '", "1")';
+                        mysqli_query($link, $sql_ipp);
+
                         echo '<script language="javascript">';
                         echo 'alert("Upload successfully")';
                         echo '</script>';
                         echo '<script language="javascript">';
-                        echo 'window.location.href = "profile.php"';
+                        echo 'window.location.href = "profile.php?id='.$id_username.'"';
                         echo '</script>';
                     }
             else {
@@ -48,51 +62,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             // }
         }
-    
-        // ! just for debug
-        // echo $title_image;
-        // echo $image;
-  
-        //$sql2 = "INSERT INTO users (username,email, pass) VALUES ('" . $username . "','" . $email . "','" . $password . "');";
-        // ! just for debug
-        // echo $sql;
-        //TODO: thực thi query cách 1
-        // }
-        //mysqli_query($link, $sql);
-        //TODO: get id photos
-    //     $sql2 = "SELECT * 
-    //             FROM posts
-    //             WHERE images_url = '" . $image . "'
-    //     ";
-        
-    //     $result = $link->query($sql2);
-    //     if (mysqli_num_rows($result) > 0) {
-    //         $row = mysqli_fetch_assoc($result);
-    //         if ($id_username == $row["user_id"]) {
-    //             $_SESSION["id_image"] = $row["id"];
-    //             // echo $_SESSION["id_image"];
-    //             $url_images = '../home/newsfeed.php?id=' . $_SESSION["id_image"] . '';
-    //             echo '<script language="javascript">';
-    //             echo 'alert("Upload successfully")';
-    //             echo '</script>';
-    //             echo '<script language="javascript">';
-    //             // echo 'window.location.href = "' . $url_images . '"';
-    //             echo '</script>';
-    //         }
-    //     }
-     
-    // }   
-    // else {
-
-    //             // echo $_SESSION["id_image"];
-    //             $url_images = '../home/newsfeed.php?ids=' . $_SESSION["id_image"] . '';
-    //             echo '<script language="javascript">';
-    //             echo 'alert("Upload successfully")';
-    //             echo '</script>';
-    //             echo '<script language="javascript">';
-    //             echo 'window.location.href = "../login"';
-    //             echo '</script>';
-    //         }
         
     }
  }

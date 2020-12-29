@@ -20,28 +20,22 @@ if (isset($_GET["id"])) {
         echo 'alert("Image was deleted");';
         echo '</script>';
         echo '<script language="javascript">';
-        echo 'window.location.href = "../home/profile.php?id=' . $row["id_user"] . '"';
+        echo 'window.location.href = "../home/profile.php?id=' . $row["user_id"] . '"';
         echo '</script>';
     }
-    $url = '
-            src="../images/' . $row["images_url"] . '"
-                ';
+    $url = ' src="../images/' . $row["images_url"] . '" ';
     $download_image = '../images/' . $row["images_url"] . '';
-    $description=$row["images_description"];
+    $description = $row["description"];
     //TODO:get username
-    $sql2 = 'SELECT *
-                FROM users
-                WHERE id = "' . $row["id_user"] . '";
-        ';
+    $sql2 = 'SELECT * FROM users WHERE id = "' . $row["user_id"] . '"';
     $result2 = $link->query($sql2);
     $row2 = mysqli_fetch_assoc($result2);
     //TODO: show avatar
-    $userpost=$row2["username"];
+    $userpost = $row2["username"];
     if ($row2["avatar_url"] == null) {
         $show_avatar = '<a href="../home/profile.php?id=' . $row2["id"] . '">
                     <img class="box-icon float-left" src="images/user.jpg" alt="" sizes="" srcset="">
-                    </a>
-                    ';
+                    </a> ';
     } else {
         $show_avatar = '<a href="../home/profile.php?id=' . $row2["id"] . '">
                     <img class="box-icon float-left" src="../images/avatar/' . $row2["avatar_url"] . '" alt="" sizes="" srcset="">
@@ -51,10 +45,7 @@ if (isset($_GET["id"])) {
     //TODO: just for recommend
 } else {
     $ids_get = $_GET["ids"];
-    $sql = 'SELECT *
-    FROM photos_any
-    WHERE id = ' . $ids_get . '
-';
+    $sql = 'SELECT *  FROM photos WHERE id = ' . $ids_get . '';
     $result = $link->query($sql);
     $row = mysqli_fetch_assoc($result);
     if ($row['status_photo'] == 2) {
@@ -101,8 +92,8 @@ if ((int)$row_lastid["id"] > 10) {
     //$show_recommend = $result_recommend;
     if (mysqli_num_rows($result_recommend) > 0) {
         while ($row_r = mysqli_fetch_assoc($result_recommend)) {
-            //TODO: SELECT * FROM users WHERE id=(SELECT id_user FROM photos WHERE id= 1)
-            $sql_getid = 'SELECT * FROM users WHERE id=(SELECT id_user FROM photos WHERE id= ' . $row_r["id"] . ') ';
+            //TODO: SELECT * FROM users WHERE id=(SELECT user_id FROM photos WHERE id= 1)
+            $sql_getid = 'SELECT * FROM users WHERE id=(SELECT user_id FROM photos WHERE id= ' . $row_r["id"] . ') ';
             $result_getid = $link->query($sql_getid);
             $row_getid = mysqli_fetch_assoc($result_getid);
             if ($row_r["status_photo"] == 2) { } else {
@@ -113,11 +104,11 @@ if ((int)$row_lastid["id"] > 10) {
                                 <img class="ds-thum" src="../images/' . $row_r["images_url"] . '" alt="" srcset="">
                             <div class="dropdown-content">
                                 <img class="ds-thum-ho" src="../images/' . $row_r["images_url"] . '" alt="Cinque Terre">
-                                <div class="desc">' . $row_r["title"] . '</div>
+                                <div class="desc">' . $row_r["description"] . '</div>
                             </div>
                         </div>
                         <div class="col-md-7 col-sm-12">
-                            <div class="d-flex text-right">' . $row_r["title"] . '</div>
+                            <div class="d-flex text-right">' . $row_r["description"] . '</div>
                             </a>
                             <a href="../home/profile.php?id=' . $row_getid["id"] . '">
                                 <div class="d-flex text-right">By ' . $row_getid["username"] . '</div>
@@ -142,8 +133,8 @@ if ((int)$row_lastid["id"] > 10) {
     //$show_recommend = $result_recommend;
     if (mysqli_num_rows($result_recommend) > 0) {
         while ($row_r = mysqli_fetch_assoc($result_recommend)) {
-            //TODO: SELECT * FROM users WHERE id=(SELECT id_user FROM photos WHERE id= 1)
-            $sql_getid = 'SELECT * FROM users WHERE id=(SELECT id_user FROM photos WHERE id= ' . $row_r["id"] . ') ';
+            //TODO: SELECT * FROM users WHERE id=(SELECT user_id FROM photos WHERE id= 1)
+            $sql_getid = 'SELECT * FROM users WHERE id=(SELECT user_id FROM photos WHERE id= ' . $row_r["id"] . ') ';
             $result_getid = $link->query($sql_getid);
             $row_getid = mysqli_fetch_assoc($result_getid);
             $show_recommend = $show_recommend . '  
@@ -173,9 +164,7 @@ if ((int)$row_lastid["id"] > 10) {
 }
 
 
-$sql_recommend = 'SELECT *
-                    FROM photos
-                ';
+// $sql_recommend = 'SELECT * FROM photos';
 
 $link->close();
 ?>

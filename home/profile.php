@@ -109,6 +109,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
     ';
 }
 else{   
+    if(isset($_SESSION["id"])){
     $fr=get_friends($_SESSION["id"],$link);
     if(in_array($id,$fr)){
         $showpasschange = '
@@ -127,6 +128,7 @@ else{
                     </div>
                     </div>
                     ';
+    }
     }
 }
 

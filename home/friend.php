@@ -5,7 +5,7 @@
     $userid = $_GET['id'];
     $fr=get_friends($userid,$link);
     $show="";
-    if($fr){
+    if($fr && isset($_SESSION["id"])){
         foreach($fr as $val){
             $fr1="SELECT * FROM users
                     WHERE id = '  $val  ';"; 
