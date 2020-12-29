@@ -5,7 +5,35 @@ require_once "../includes/connectdb.php";
 $id = $_GET['id'];
 $countphoto=0;
 $countpost=0;
-
+function likess($l,$link){
+    $countl=0;
+    $sql_insert = "SELECT * from icons
+     WHERE  post_id=".$l. ";";
+     $insert=mysqli_query($link, $sql_insert);
+     if(mysqli_num_rows($insert) > 0){
+        while($row=mysqli_fetch_assoc($insert)){
+            if($row["type_icon"]==1){
+           $countl++;
+        }
+        }
+     }
+    
+     return $countl;
+    }
+    function mylikes($l,$link){
+        $countl="";
+        $sql_insert = "SELECT * from icons
+         WHERE  post_id=".$l. ";";
+         $insert=mysqli_query($link, $sql_insert);
+         if(mysqli_num_rows($insert) > 0){
+            while($row=mysqli_fetch_assoc($insert)){
+            if(($row["user_id"]==$_SESSION["id"]) && ($row["type_icon"]==1) ){
+                $countl="btn-primary";
+            }
+            }
+         }
+         return $countl;
+        }
 // : show user name
 $sql_showusername = 'SELECT * FROM users WHERE id="' . $id . '"';
 $result_showusername = $link->query($sql_showusername);

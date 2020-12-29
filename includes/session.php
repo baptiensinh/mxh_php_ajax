@@ -13,7 +13,8 @@ if (isset($_SESSION["username"])) {
     $log_reg = '
                <a href="" class="mr-4">
                     <div class="ds-hover nav-item text-white pt-2 nav-link     ">
-                    Message
+                    <a href="../home/chat.php">
+                    Message </a>
                      </div>
                 </a>
                 <div id="noti_Container " class="pt-2 mr-5">

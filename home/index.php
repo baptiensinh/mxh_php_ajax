@@ -2,9 +2,43 @@
     require_once "../includes/session.php";
     require_once "../includes/connectdb.php";
 
+
+//count likes
+function likess($l,$link){
+$countl=0;
+$sql_insert = "SELECT * from icons
+ WHERE  post_id=".$l. ";";
+ $insert=mysqli_query($link, $sql_insert);
+ if(mysqli_num_rows($insert) > 0){
+    while($row=mysqli_fetch_assoc($insert)){
+        if($row["type_icon"]==1){
+       $countl++;
+    }
+    }
+ }
+
+ return $countl;
+}
+function mylikes($l,$link){
+    $countl="";
+    $sql_insert = "SELECT * from icons
+     WHERE  post_id=".$l. ";";
+     $insert=mysqli_query($link, $sql_insert);
+     if(mysqli_num_rows($insert) > 0){
+        while($row=mysqli_fetch_assoc($insert)){
+        if(($row["user_id"]==$_SESSION["id"]) && ($row["type_icon"]==1) ){
+            $countl="btn-primary";
+        }
+        }
+     }
+     return $countl;
+    }
+
     $show_avatar_sugg="";
     $username_sugg="";
     $show_content = '';
+
+    
     // $sql_lastid = 'SELECT id FROM posts  ORDER BY id DESC LIMIT 1'; //lay so luong hinh anh
     // $result_lastid = $link->query($sql_lastid);
     // $row_lastid = mysqli_fetch_assoc($result_lastid);
@@ -72,7 +106,6 @@ else {
     }
     $fr=get_friends($_SESSION["id"],$link);
     $sql_show_recommend = 'SELECT * FROM posts WHERE status_post = 0 ORDER BY id DESC';
-
     $result_recommend = $link->query($sql_show_recommend);
     array_push($fr,$_SESSION["id"]);
     if(!empty($result_recommend)&&isset($fr)){
@@ -111,21 +144,44 @@ else {
                             $show_content = $show_content .'
                             
                             <div class="card-body">
-                                <button class="btn btn-outline-secondary">Like</button>
-                                <p>12 likes</p>
-                                <hr>
-                                <div class="comment-css">   
-                                 <a  href="profile.php?id=' . $row_get_info["id"] . '"> ' . $row_get_info["username"] . '</a>
-                                <h9 class="text-content"></h9>
-                                <form action="comment.php" class="comment-form" method="POST">
-                                <hr>
-                                <div class="input-group mb-3">
-                                <input type="text" class="form-control cmt" placeholder="Add a Comment ..." aria-label="Comment" aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                <button class="input-group-text" id="basic-addon2">OK</button>
+                                <div id="btnlike" >
+                                <button class="bttlike '.mylikes($row_r["id"],$link).' btn btn-outline-secondary" id="'.$row_r["id"].'" >Like</button>
                                 </div>
-                            </div>
-                                </form>
+                                <p id="likes">'.likess($row_r["id"],$link).' likes</p>
+                                <hr>
+                                <div class="comment-css">';
+
+                            $sql_get_cmt = 'SELECT * FROM comments c JOIN users u ON c.user_id = u.id WHERE post_id = '.$row_r["id"].'';
+                            $result_get_cmt = $link->query($sql_get_cmt);
+                                if (mysqli_num_rows($result_get_cmt) > 0){
+                                    while ($row_cmt = mysqli_fetch_assoc($result_get_cmt))
+                                    {
+                                        $show_content = $show_content .'
+                                        <div class="card-body" >
+                                        <a href="../home/profile.php?id=' . $row_cmt["user_id"] . '">
+                                        <img class="box-icon-profile float-left img-re" style="width: 40px; height: 40px;" src="../images/avatar/' . $row_cmt["avatar_url"] . '" alt="" sizes="" srcset="">
+                                        </a>
+                                        <div class="name-re-content" style="margin-left: 15px">
+                                            <a  href="profile.php?id=' . $row_cmt["user_id"] . '">' . $row_cmt["username"] . '</a>
+                                        </div>
+                                        </div>
+                                        <div style="margin-left: 60px">
+                                            <p>'.$row_cmt["content_cmt"].'</p> 
+                                        </div>';
+                                    }
+                                }
+
+                                $show_content = $show_content .'
+                                    <hr>
+                                    <form action="comment.php?id='.$row_r["id"].'" class="comment-form" method="POST">
+                                        
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control cmt" name="cmt" placeholder="Add a Comment ..." aria-label="Comment" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button type="submit">OK</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -136,6 +192,7 @@ else {
         }
     }
 }
+
 ?>
 
 

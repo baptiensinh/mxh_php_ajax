@@ -11,6 +11,12 @@ $(document).ready(function () {
             $("#showif").html(data);
         });
     });
+    $("#btt_posts").click(function(){ 
+        var t=$(this).val();
+        $.get("post.php",{id:t}, function(data){
+            $("#showif").html(data);
+        });
+    });
     $("#btt_photos").click(function(){ 
         var t=$(this).val();
         $.get("photo.php",{id:t}, function(data){
@@ -19,12 +25,22 @@ $(document).ready(function () {
     });
     $(".btndelete").click(function(){ 
         var t=this.id;
-        console.log(t);
         $.get("deletephoto.php",{idd:t}, function(data){
-            console.log(data);
             $("#scr").html(data);
         });
     });
+    $(".bttlike").click(function(){ 
+        var t=this.id;
+        $.get("like.php",{idd:t}, function(data){
+            $("#likes").html(data);
+        });
+    });
+    // $(".bttlike").click(function(){ 
+    //     var t=this.id;
+    //     $.get("likeicon.php",{idd:t}, function(data){
+    //         $("#btnlike").html(data);
+    //     });
+    // });
 
    
 

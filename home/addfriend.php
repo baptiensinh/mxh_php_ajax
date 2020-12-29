@@ -6,14 +6,14 @@ $sql_insert = "SELECT * relationships
  WHERE (user1= " .$_SESSION['id'] ." and user2=".$_GET['id']. ") or (user2= " .$_SESSION['id'] ." and user1=".$_GET['id']. ") ;";
 
 $insert=mysqli_query($link, $sql_insert);
-if((mysqli_num_rows($rs) > 0)&& isset($_GET['id'])){
+if((mysqli_num_rows($insert) > 0)&& isset($_GET['id'])&& isset($_SESSION["id"])){
     $sql_insert = "UPDATE relationships set friend_stt=0
              WHERE (user1= " .$_SESSION['id'] ." and user2=".$_GET['id']. ") or (user2= " .$_SESSION['id'] ." and user1=".$_GET['id']. ") ;";
     print_r($sql_insert);
     $insert=mysqli_query($link, $sql_insert);
     if($insert){
         echo '<script language="javascript">';
-        echo 'alert("has sent a friend invitation 1");';
+        echo 'alert("has sent a friend invitation");';
         echo '</script>';
         echo '<script language="javascript">';
         echo 'window.location.href = "../home"';
@@ -37,7 +37,7 @@ if(isset($_SESSION["id"]) && isset($_GET['id'])){
         $insert=mysqli_query($link, $sql_insert);
         if($insert){
             echo '<script language="javascript">';
-            echo 'alert("has sent a friend invitation2 ");';
+            echo 'alert("has sent a friend invitation ");';
             echo '</script>';
             echo '<script language="javascript">';
             echo 'window.location.href = "../home"';

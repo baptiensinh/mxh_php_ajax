@@ -52,7 +52,8 @@ function get_friends($userid,$link){
         // print_r($row_fr3);
         return $row_fr3;
     }else{
-        return 0;
+        array_push($row_fr3,"0");
+        return $row_fr3;
     }
 }
 
