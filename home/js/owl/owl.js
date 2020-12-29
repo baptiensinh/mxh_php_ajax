@@ -1,7 +1,10 @@
 
-
-
 $(document).ready(function () {
+    function reply_click(clicked_id)
+    {
+        var t =clicked_id;
+        
+    }
     $("#btt_friend").click(function(){ 
         var t=$(this).val();
         $.get("friend.php",{id:t}, function(data){
@@ -14,12 +17,17 @@ $(document).ready(function () {
             $("#showif").html(data);
         });
     });
-    $("#btt_posts").click(function(){ 
-        var t=$(this).val();
-        $.get("post.php",{id:t}, function(data){
-            $("#showif").html(data);
+    $("#btndelete").click(function(){ 
+        var t=$(this.id);
+        console.log("delete");
+        $.get("deletephoto.php",{id:t}, function(data){
+            console.log(data);
+            $("#scr").html(data);
         });
     });
+
+   
+
 
 
 

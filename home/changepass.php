@@ -46,11 +46,44 @@ if (isset($_SESSION['id'])) { } else {
 </div>
 </nav>
 
-	<form class="form-change-pass" method="POST" action="changep_true.php">
+	<!-- <form class="form-change-pass" method="POST" action="changep_true.php">
 			<input type="password" placeholder="password" name="passold"><br>
 			<input type="password" placeholder="new password" name="passnew"><br>
 			<button type="submit">Change password</button>
-	</form>
+    </form> -->
+    <div class="container">
+        <div class="row justify-content-center pt-5" >
+                <section class="mb-5 text-center">
+
+            <p>Set a new password</p>
+
+            <form  method="POST" action="changep_true.php">
+
+                <div class="md-form md-outline">
+                <input type="password" id="newPass" class="form-control">
+                <label data-error="wrong" data-success="right" for="newPass">New password</label>
+                </div>
+
+                <div class="md-form md-outline">
+                <input type="password" id="newPassConfirm" class="form-control">
+                <label data-error="wrong" data-success="right" for="newPassConfirm">Confirm password</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary mb-4">Change password</button>
+
+            </form>
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+
+                <u><a href="../login/">Back to Log In</a></u>
+
+                <u><a href="../register/">Register</a></u>
+
+            </div>
+
+</section>
+</div>
+</div>
 
 
 

@@ -42,11 +42,9 @@ if(!empty($result_showphotoid)){
                         </a>
                         <div class="card-body">           
                             <div class="text-center">
-                                <a href="deletephoto.php?id=' . $row_showphotoid["id"] . '">
-                                    <button type="button" class="btn " onclick="clickDel();">Delete</button>
-                                </a>
-                                <a href="editImage/editimage.php?id=' . $row_showphotoid["id"] . '">
-                                    <button type="button" class="btn " onclick="clickEdit();">Edit</button>
+                                <button class="btndelete btn" id="'.$row_showphotoid["id"].'">DELETE</button>
+                                <a href="post.php?id=' . $row_showphotoid["id"] . '">
+                                    <button type="button" value="<?php echo $id; ?>" class="btn ">POST</button>
                                 </a>
                             </div>    
                         </div>
@@ -55,7 +53,7 @@ if(!empty($result_showphotoid)){
             ';
                 }
             } else {
-                if ($row_showphotoid["status_post"] == 1) {
+                if ($row_showphotoid["status_photo"] == 1) {
                     $countpost++;
                     $showphotoid = $showphotoid . '
                 <div class="col-md-12 col-lg-4 col-md-3 pt-4 item">
@@ -112,7 +110,17 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
 
     ';
 }
-else{
+else{   
+    $fr=get_friends($_SESSION["id"],$link);
+    if(in_array($id,$fr)){
+        $showpasschange = '
+                    <div class="row">
+                    <div class="col-md-12 ">
+                    <a class="ml-5" href="../home/unfr.php?id=' . $id . '">UnFriend</a> 
+                    </div>
+                    </div>
+                    ';
+    }else{
     
     $showpasschange = '
                     <div class="row">
@@ -121,7 +129,7 @@ else{
                     </div>
                     </div>
                     ';
-
+    }
 }
 
 
@@ -279,9 +287,9 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
         <div class="row pt-3">
         
         </div>
-        <div class="row">
+        <div class="row d-block">
         <hr>
-            <section class="">
+            <section >
                 <div class="row">
                      
                     <div class="col-12">
@@ -304,6 +312,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] ==  $row_showusername["id"]) {
         </div>
     </div>
     <div class="pt-5"></div>
+    <div id="scr"></div>
 
     <script src="js/popper.min.js"></script>
     <script src="js/owl/owl.carousel.min.js"></script>

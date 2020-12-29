@@ -35,9 +35,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         //$image = $final_file;
                         
                         $sql = "INSERT INTO photos (user_id, status_photo, images_url) VALUES ('" . $id_username . "','0','" . $final_file . "')";
-                        echo " alo";
-                        print_r($sql);
                         mysqli_query($link, $sql);
+                        echo '<script language="javascript">';
+                        echo 'alert("Upload successfully")';
+                        echo '</script>';
+                        echo '<script language="javascript">';
+                        echo 'window.location.href = "profile.php"';
+                        echo '</script>';
                     }
             else {
                     array_push($error,"$file_name, ");
