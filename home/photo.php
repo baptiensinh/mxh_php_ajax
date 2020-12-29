@@ -3,6 +3,7 @@ session_start();
     require_once "../includes/connectdb.php";
 $id = $_GET['id'];
 $showphotoid = "";
+$countpost=0;
                    
 $sql_showphotoid = 'SELECT * FROM photos
                         WHERE user_id = "' . $id . '" 

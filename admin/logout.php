@@ -1,0 +1,12 @@
+<?php
+// Initialize the session
+session_start();
+
+unset($_SESSION["id"]);
+unset($_SESSION["username"]);
+//session_destroy();
+
+// Redirect to login page
+header("location:../admin/login/login.php");
+exit;
+?>

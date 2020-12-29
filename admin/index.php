@@ -1,9 +1,13 @@
 <?php 
+require_once "../includes/connectdb.php";
+require_once "../includes/session.php";
+
 include('includes/header.php'); 
 include('includes/navbar.php'); 
 
-if (!isset($_SESSION["id"])){
-    header("location: /phpmxh/admin/login/login.php");
+
+if (!isset($username2)){
+     header("location: /phpmxh/admin/login/login.php");
 }
 
 ?>

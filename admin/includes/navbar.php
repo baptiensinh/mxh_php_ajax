@@ -1,3 +1,8 @@
+<?php 
+require_once "../includes/connectdb.php";
+require_once "../includes/session.php";
+
+?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-mattBlackLight fixed-top">
     <button class="navbar-toggler sideMenuToggler" type="button">
         <span class="navbar-toggler-icon"></span>
@@ -16,12 +21,15 @@
                     <i class="material-icons icon">
                         person
                     </i>
-                    <span class="text">Account</span>
+                    <a  href="../admin/logout.php">Log out</a>
+                    <span class="text"><?php  echo $username2 ?></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="#">Profile</a>
+
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Log out</a>
+
+                    <a class="dropdown-item" href="../admin/logout.php">Log out</a>
                 </div>
             </li>
         </ul>

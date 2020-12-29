@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo 'alert("Login unsuccessful.\nEmail or password is incorrect.\nYou will return Login, right now.")';
         echo '</script>';
         echo '<script language="javascript">';
-        echo 'window.location.href = "../login/"';
+        // echo 'window.location.href = "../login/"';
         echo '</script>';
     }
     //echo ($sql);
@@ -124,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	<script src="vendor/animsition/js/animsition.min.js"></script>
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="js/callback_captcha.js"></script>
+
 	<!-- <script src="vendor/select2/select2.min.js"></script> -->
 	<!-- <script src="vendor/daterangepicker/moment.min.js"></script>
 	<script src="vendor/daterangepicker/daterangepicker.js"></script> -->
